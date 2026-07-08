@@ -7,12 +7,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 // ---------------------------------------------------------------------------
-// TODO(launch): wire this to a real capture endpoint before go-live.
-// Fastest path: create a form at https://formspree.io and paste its endpoint
-// below, e.g. "https://formspree.io/f/abcdwxyz". While this stays null, the
-// form validates and acknowledges in-browser but does NOT persist anywhere.
+// Capture endpoint. FormSubmit delivers each signup to the inbox below with
+// no account needed; the first submission triggers a one-time activation
+// email to that inbox. To upgrade to Formspree later, replace this with
+// "https://formspree.io/f/<id>". Keep this a real endpoint: the success
+// state below tells people they are on the list.
 // ---------------------------------------------------------------------------
-const FORMSPREE_ENDPOINT: string | null = null;
+const CAPTURE_ENDPOINT = "https://formsubmit.co/ajax/adamtpang@gmail.com";
 
 type Status = "idle" | "invalid" | "submitting" | "done" | "error";
 
@@ -33,18 +34,18 @@ export function EmailCapture() {
 
     setStatus("submitting");
     try {
-      if (FORMSPREE_ENDPOINT) {
-        const res = await fetch(FORMSPREE_ENDPOINT, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify({ email: value }),
-        });
-        if (!res.ok) throw new Error("Request failed");
-      }
-      // No endpoint wired yet, but still acknowledge so the experience is complete.
+      const res = await fetch(CAPTURE_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          email: value,
+          _subject: "archimedes.life signup",
+        }),
+      });
+      if (!res.ok) throw new Error("Request failed");
       setStatus("done");
     } catch {
       setStatus("error");

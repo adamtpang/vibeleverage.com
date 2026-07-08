@@ -356,6 +356,10 @@ export default function Page() {
               className="underline-offset-4 hover:underline"
             >
               built by Adam Pangelinan
+            </a>{" "}
+            ·{" "}
+            <a href="/privacy" className="underline-offset-4 hover:underline">
+              privacy
             </a>
           </p>
         </div>
