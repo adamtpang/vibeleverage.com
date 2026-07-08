@@ -349,7 +349,15 @@ export default function Page() {
           <p className="text-sm text-muted-foreground">
             Find the lever. Move the world.
           </p>
-          <p className="font-mono text-xs text-muted-foreground">© 2026</p>
+          <p className="font-mono text-xs text-muted-foreground">
+            © 2026 ·{" "}
+            <a
+              href="https://adampang.com"
+              className="underline-offset-4 hover:underline"
+            >
+              built by Adam Pangelinan
+            </a>
+          </p>
         </div>
       </footer>
     </main>
