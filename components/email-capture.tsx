@@ -46,6 +46,10 @@ export function EmailCapture() {
         }),
       });
       if (!res.ok) throw new Error("Request failed");
+      // FormSubmit signals delivery in the body, not the HTTP status. Never
+      // confirm a signup that was not actually accepted.
+      const data = (await res.json()) as { success?: unknown };
+      if (String(data.success) !== "true") throw new Error("Not delivered");
       setStatus("done");
     } catch {
       setStatus("error");
