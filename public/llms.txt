@@ -1,0 +1,13 @@
+# archimedes.life
+
+archimedes.life is an interactive leverage diagnosis for founders and operators seeking leverage. It helps you find which of the four levers (labor, capital, code, media) you are underusing, and gives you a 90-day cure protocol to fix it.
+
+## Pricing
+
+Founding lifetime license $49: https://buy.stripe.com/9B64gz7Z00Oh5kc9WFaMU0E
+
+## Links
+
+Site: https://archimedes.life
+More from adam.inc (43 products, one menu): https://adam.gives
+Built by Adam Pang: https://adampang.com

@@ -288,6 +288,26 @@ export function playId(leverKey: LeverKey, index: number): string {
   return `${leverKey}:${index}`;
 }
 
+// ─────────────────────── shareable cards ───────────────────────
+
+/** Scores as a URL segment: "35-12-4-5" in code, media, capital, labor order. */
+export function scoreSlug(scores: Scores): string {
+  return `${scores.code}-${scores.media}-${scores.capital}-${scores.labor}`;
+}
+
+export function parseScoreSlug(slug: string): Scores | null {
+  const parts = slug.split("-");
+  if (parts.length !== 4) return null;
+  const nums = parts.map((p) => Number(p));
+  if (nums.some((n) => !Number.isFinite(n) || n < 0 || n > 100)) return null;
+  return {
+    code: Math.round(nums[0]),
+    media: Math.round(nums[1]),
+    capital: Math.round(nums[2]),
+    labor: Math.round(nums[3]),
+  };
+}
+
 export interface NextPlay extends CurePlay {
   id: string;
   leverKey: LeverKey;

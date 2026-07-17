@@ -1,4 +1,4 @@
-import { ArrowDown } from "lucide-react";
+import { ArrowDown, ArrowRight } from "lucide-react";
 
 import { ArchimedesChat } from "@/components/archimedes-chat";
 import { CureProtocol } from "@/components/cure-protocol";
@@ -111,6 +111,20 @@ export default function Page() {
             <a href="#diagnostic">
               Run your diagnosis
               <ArrowDown className="h-4 w-4" />
+            </a>
+          </Button>
+          <Button
+            asChild
+            variant="ghost"
+            className="h-12 px-5 text-base text-muted-foreground hover:bg-secondary/50 hover:text-foreground"
+          >
+            <a
+              href="https://buy.stripe.com/9B64gz7Z00Oh5kc9WFaMU0E"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Founding license · $49
+              <ArrowRight className="ml-1.5 h-4 w-4" />
             </a>
           </Button>
           <Button

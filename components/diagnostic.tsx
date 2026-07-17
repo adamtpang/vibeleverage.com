@@ -1,13 +1,14 @@
 "use client";
 
 import * as React from "react";
-import { Check, Copy } from "lucide-react";
+import { Check, Copy, Share2 } from "lucide-react";
 
 import {
   buildClaudePrompt,
   LEVERS,
   LEVER_BY_KEY,
   profile,
+  scoreSlug,
   type Lever,
   type Scores,
 } from "@/lib/levers";
@@ -21,6 +22,7 @@ const SAMPLE: Scores = { code: 85, media: 5, capital: 10, labor: 5 };
 export function Diagnostic() {
   const { scores, setScore, setScores, constraint, index } = useLeverage();
   const [copied, setCopied] = React.useState(false);
+  const [shared, setShared] = React.useState(false);
 
   const constraintLever = LEVER_BY_KEY[constraint];
   const prof = profile(scores);
@@ -33,6 +35,17 @@ export function Diagnostic() {
       window.setTimeout(() => setCopied(false), 2000);
     } catch {
       /* clipboard blocked; the preview below is the manual fallback */
+    }
+  }
+
+  async function shareCard() {
+    const url = `${window.location.origin}/card/${scoreSlug(scores)}`;
+    try {
+      await navigator.clipboard.writeText(url);
+      setShared(true);
+      window.setTimeout(() => setShared(false), 2000);
+    } catch {
+      window.open(url, "_blank", "noopener");
     }
   }
 
@@ -168,6 +181,23 @@ export function Diagnostic() {
                 <>
                   <Copy className="h-4 w-4" />
                   Copy Claude prompt
+                </>
+              )}
+            </button>
+            <button
+              type="button"
+              onClick={shareCard}
+              className="inline-flex h-11 items-center justify-center gap-2 rounded-md border border-border px-5 text-sm font-medium text-muted-foreground transition-colors hover:border-lever/50 hover:text-foreground"
+            >
+              {shared ? (
+                <>
+                  <Check className="h-4 w-4" strokeWidth={3} />
+                  Link copied
+                </>
+              ) : (
+                <>
+                  <Share2 className="h-4 w-4" />
+                  Share your card
                 </>
               )}
             </button>
