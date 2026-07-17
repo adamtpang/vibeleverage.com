@@ -20,6 +20,9 @@ const TRACK = "#2b261d";
 const MUTED = "#8f8878";
 const PAPER = "#f2ead9";
 
+// Satori rule: every div gets an explicit display, and any div holding text
+// holds exactly one text child. Multiple children without display:flex throws,
+// and the route then returns an empty 200 instead of a visible error.
 export default function CardImage({ params }: { params: { scores: string } }) {
   const scores: Scores =
     parseScoreSlug(params.scores) ?? { code: 0, media: 0, capital: 0, labor: 0 };
@@ -44,59 +47,78 @@ export default function CardImage({ params }: { params: { scores: string } }) {
           flexDirection: "column",
           justifyContent: "space-between",
           backgroundColor: INK,
-          padding: "60px 68px",
+          padding: "58px 66px",
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 13,
-            color: MUTED,
-            fontSize: 23,
-            letterSpacing: 7,
-          }}
-        >
+        <div style={{ display: "flex", alignItems: "center" }}>
           <div
             style={{
+              display: "flex",
               width: 0,
               height: 0,
+              marginRight: 14,
               borderLeft: "12px solid transparent",
               borderRight: "12px solid transparent",
               borderBottom: `19px solid ${GOLD}`,
             }}
           />
-          THE LEVERAGE DIAGNOSIS
+          <div style={{ display: "flex", color: MUTED, fontSize: 22, letterSpacing: 7 }}>
+            THE LEVERAGE DIAGNOSIS
+          </div>
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: 64 }}>
-          <div style={{ display: "flex", flexDirection: "column", width: 400 }}>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <div style={{ display: "flex", flexDirection: "column", width: 420 }}>
             <div style={{ display: "flex", alignItems: "baseline" }}>
-              <div style={{ fontSize: 168, fontWeight: 700, color: GOLD, lineHeight: 1 }}>
-                {index}
+              <div
+                style={{
+                  display: "flex",
+                  fontSize: 172,
+                  fontWeight: 700,
+                  color: GOLD,
+                  lineHeight: 1,
+                }}
+              >
+                {String(index)}
               </div>
-              <div style={{ fontSize: 40, color: MUTED, marginLeft: 8 }}>/100</div>
+              <div
+                style={{ display: "flex", fontSize: 40, color: MUTED, marginLeft: 10 }}
+              >
+                /100
+              </div>
             </div>
-            <div style={{ fontSize: 30, color: PAPER, marginTop: 14, display: "flex" }}>
+            <div
+              style={{ display: "flex", fontSize: 31, color: PAPER, marginTop: 16 }}
+            >
               {prof.label}
             </div>
-            <div style={{ fontSize: 23, color: MUTED, marginTop: 8, display: "flex" }}>
-              Binding constraint: {constraint.name}
+            <div
+              style={{ display: "flex", fontSize: 23, color: MUTED, marginTop: 10 }}
+            >
+              {`Binding constraint: ${constraint.name}`}
             </div>
           </div>
 
-          <div style={{ display: "flex", flexDirection: "column", flex: 1, gap: 22 }}>
+          <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
             {rows.map((row) => (
-              <div key={row.name} style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              <div
+                key={row.name}
+                style={{ display: "flex", flexDirection: "column", marginBottom: 20 }}
+              >
                 <div
                   style={{
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "baseline",
+                    marginBottom: 9,
                   }}
                 >
-                  <div style={{ fontSize: 25, color: PAPER, display: "flex" }}>{row.name}</div>
-                  <div style={{ fontSize: 25, color: GOLD, display: "flex" }}>{row.value}</div>
+                  <div style={{ display: "flex", fontSize: 25, color: PAPER }}>
+                    {row.name}
+                  </div>
+                  <div style={{ display: "flex", fontSize: 25, color: GOLD }}>
+                    {String(row.value)}
+                  </div>
                 </div>
                 <div
                   style={{
@@ -129,10 +151,10 @@ export default function CardImage({ params }: { params: { scores: string } }) {
             justifyContent: "space-between",
           }}
         >
-          <div style={{ color: MUTED, fontSize: 25, display: "flex" }}>
+          <div style={{ display: "flex", color: MUTED, fontSize: 24 }}>
             Find the lever. Move the world.
           </div>
-          <div style={{ color: GOLD, fontSize: 25, letterSpacing: 1, display: "flex" }}>
+          <div style={{ display: "flex", color: GOLD, fontSize: 24, letterSpacing: 1 }}>
             archimedes.life
           </div>
         </div>
