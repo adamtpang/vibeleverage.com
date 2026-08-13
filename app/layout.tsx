@@ -59,6 +59,46 @@ export const viewport: Viewport = {
   colorScheme: "dark",
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://archimedes.life/#organization",
+      name: "archimedes",
+      url: "https://archimedes.life",
+      logo: "https://archimedes.life/icon.svg",
+      founder: {
+        "@type": "Person",
+        name: "Adam Pang",
+        url: "https://adampang.com",
+      },
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://archimedes.life/#website",
+      url: "https://archimedes.life",
+      name: "archimedes · the leverage diagnosis",
+      description,
+      publisher: { "@id": "https://archimedes.life/#organization" },
+    },
+    {
+      "@type": "Product",
+      name: "archimedes founding license",
+      description:
+        "An interactive leverage diagnosis that identifies which of the four levers (labor, capital, code, media) you are underusing and prescribes a 90-day cure protocol.",
+      brand: { "@id": "https://archimedes.life/#organization" },
+      offers: {
+        "@type": "Offer",
+        url: "https://buy.stripe.com/9B64gz7Z00Oh5kc9WFaMU0E",
+        price: "49",
+        priceCurrency: "USD",
+        availability: "https://schema.org/InStock",
+      },
+    },
+  ],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -67,6 +107,10 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         {children}
         <Analytics />
       </body>
