@@ -18,6 +18,9 @@
 
 # misc
 .DS_Store
+
+# Fulcrum Media job state (local-only feature)
+/.fulcrum
 *.pem
 
 # debug
