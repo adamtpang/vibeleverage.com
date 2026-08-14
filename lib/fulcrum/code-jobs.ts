@@ -17,7 +17,6 @@ import path from "node:path";
 // is ever pushed or deployed by this code, that stays a separate, manual,
 // explicit action, same as every "upload to YouTube" step this season.
 
-const PYTHON_UNUSED = undefined; // no python dependency here, code jobs are pure git + claude CLI
 const JOBS_DIR = path.join(process.cwd(), ".fulcrum", "code-jobs");
 
 export type CodeJobPhase = "queued" | "working" | "ready_for_review" | "merged" | "error";
