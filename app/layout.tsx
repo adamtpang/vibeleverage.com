@@ -16,7 +16,7 @@ const geistMono = localFont({
 
 const title = "archimedes · the leverage diagnosis";
 const description =
-  "You don't have an effort problem. You have a leverage problem. We diagnose the four levers you're under-using (code, media, capital, labor) and prescribe the one move that pulls each.";
+  "Diagnose which of the four levers (code, media, capital, labor) is holding you back, get a cure protocol, and unlock the $49 founding license.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://archimedes.life"),
@@ -26,17 +26,6 @@ export const metadata: Metadata = {
   },
   description,
   applicationName: "archimedes",
-  keywords: [
-    "leverage",
-    "leverage diagnosis",
-    "code",
-    "media",
-    "capital",
-    "labor",
-    "productivity",
-    "compounding",
-    "archimedes",
-  ],
   authors: [{ name: "archimedes" }],
   alternates: { canonical: "/" },
   openGraph: {
@@ -59,6 +48,12 @@ export const viewport: Viewport = {
   colorScheme: "dark",
 };
 
+// Note: the founding license (Product/Offer) is nested under the
+// Organization via `makesOffer` rather than as a top-level @graph node, so
+// the homepage's primary entity stays WebSite (this is a genuine landing
+// page for the diagnostic tool, not a product page). No WebSite
+// potentialAction/SearchAction is included because the site has no working
+// search feature; a placeholder SearchAction would be fabricated data.
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
@@ -73,6 +68,19 @@ const jsonLd = {
         name: "Adam Pang",
         url: "https://adampang.com",
       },
+      makesOffer: {
+        "@type": "Offer",
+        url: "https://buy.stripe.com/9B64gz7Z00Oh5kc9WFaMU0E",
+        price: "49",
+        priceCurrency: "USD",
+        availability: "https://schema.org/InStock",
+        itemOffered: {
+          "@type": "Product",
+          name: "archimedes founding license",
+          description:
+            "An interactive leverage diagnosis that identifies which of the four levers (labor, capital, code, media) you are underusing and prescribes a 90-day cure protocol.",
+        },
+      },
     },
     {
       "@type": "WebSite",
@@ -80,21 +88,8 @@ const jsonLd = {
       url: "https://archimedes.life",
       name: "archimedes · the leverage diagnosis",
       description,
+      author: { "@id": "https://archimedes.life/#organization" },
       publisher: { "@id": "https://archimedes.life/#organization" },
-    },
-    {
-      "@type": "Product",
-      name: "archimedes founding license",
-      description:
-        "An interactive leverage diagnosis that identifies which of the four levers (labor, capital, code, media) you are underusing and prescribes a 90-day cure protocol.",
-      brand: { "@id": "https://archimedes.life/#organization" },
-      offers: {
-        "@type": "Offer",
-        url: "https://buy.stripe.com/9B64gz7Z00Oh5kc9WFaMU0E",
-        price: "49",
-        priceCurrency: "USD",
-        availability: "https://schema.org/InStock",
-      },
     },
   ],
 };
