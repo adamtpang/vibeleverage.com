@@ -24,10 +24,10 @@ export default function PrivacyPage() {
             What stays in your browser
           </h2>
           <p>
-            Your lever scores, score history, completed plays, and any API key
-            you paste into the chat live in your browser&rsquo;s localStorage.
-            They are not sent to our servers, and we cannot see them. Clearing
-            your browser storage deletes them.
+            Your evidence answers, lever scores, comparable audit receipts,
+            completed plays, and any API key you paste into the chat live in
+            your browser&rsquo;s localStorage. They are not sent to our servers,
+            and we cannot see them. Clearing your browser storage deletes them.
           </p>
         </section>
 
@@ -60,7 +60,7 @@ export default function PrivacyPage() {
             Questions
           </h2>
           <p>
-            Email adamtpang@gmail.com and a human answers. Last updated July
+            Email adamtpang@gmail.com and a human answers. Last updated August
             2026.
           </p>
         </section>

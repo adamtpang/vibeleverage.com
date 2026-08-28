@@ -3,36 +3,28 @@
 import * as React from "react";
 
 import {
-  bindingConstraint,
+  diagnoseLeverage,
+  type DiagnosticAnswers,
+  type LeverageDiagnosis,
+} from "@/lib/leverage-diagnostic";
+import {
   COMPLETED_PLAYS_KEY,
   HISTORY_KEY,
-  leverageIndex,
   SCORES_STORAGE_KEY,
-  type LeverKey,
   type Scores,
   type Snapshot,
 } from "@/lib/levers";
 
-const DEFAULTS: Scores = { code: 50, media: 25, capital: 30, labor: 35 };
-
-function clamp(value: unknown): number {
-  const n = Math.round(Number(value));
-  if (Number.isNaN(n)) return 0;
-  return Math.max(0, Math.min(100, n));
-}
-
-function startOfDay(t: number): number {
-  const d = new Date(t);
-  d.setHours(0, 0, 0, 0);
-  return d.getTime();
-}
+const ANSWERS_STORAGE_KEY = "archimedes:evidence:v2";
 
 interface LeverageValue {
   loaded: boolean;
   scores: Scores;
-  setScore: (key: LeverKey, value: number) => void;
-  setScores: (scores: Scores) => void;
-  constraint: LeverKey;
+  answers: DiagnosticAnswers;
+  setAnswer: (questionId: string, optionId: string) => void;
+  resetDiagnosis: () => void;
+  diagnosis: LeverageDiagnosis;
+  constraint: LeverageDiagnosis["constraint"];
   index: number;
   completedPlays: Set<string>;
   togglePlay: (id: string) => void;
@@ -50,22 +42,21 @@ export function useLeverage(): LeverageValue {
 }
 
 export function LeverageProvider({ children }: { children: React.ReactNode }) {
-  const [scores, setScoresState] = React.useState<Scores>(DEFAULTS);
+  const [answers, setAnswers] = React.useState<DiagnosticAnswers>({});
   const [completedPlays, setCompleted] = React.useState<Set<string>>(new Set());
   const [history, setHistory] = React.useState<Snapshot[]>([]);
   const [loaded, setLoaded] = React.useState(false);
+  const diagnosis = React.useMemo(() => diagnoseLeverage(answers), [answers]);
+  const scores = diagnosis.scores;
 
   React.useEffect(() => {
     try {
-      const rawScores = localStorage.getItem(SCORES_STORAGE_KEY);
-      if (rawScores) {
-        const p = JSON.parse(rawScores) as Partial<Scores>;
-        setScoresState({
-          code: clamp(p.code ?? DEFAULTS.code),
-          media: clamp(p.media ?? DEFAULTS.media),
-          capital: clamp(p.capital ?? DEFAULTS.capital),
-          labor: clamp(p.labor ?? DEFAULTS.labor),
-        });
+      const rawAnswers = localStorage.getItem(ANSWERS_STORAGE_KEY);
+      if (rawAnswers) {
+        const parsed = JSON.parse(rawAnswers) as unknown;
+        if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
+          setAnswers(parsed as DiagnosticAnswers);
+        }
       }
       const rawPlays = localStorage.getItem(COMPLETED_PLAYS_KEY);
       if (rawPlays) {
@@ -88,11 +79,12 @@ export function LeverageProvider({ children }: { children: React.ReactNode }) {
   React.useEffect(() => {
     if (!loaded) return;
     try {
+      localStorage.setItem(ANSWERS_STORAGE_KEY, JSON.stringify(answers));
       localStorage.setItem(SCORES_STORAGE_KEY, JSON.stringify(scores));
     } catch {
       /* storage unavailable */
     }
-  }, [scores, loaded]);
+  }, [answers, scores, loaded]);
 
   React.useEffect(() => {
     if (!loaded) return;
@@ -115,17 +107,12 @@ export function LeverageProvider({ children }: { children: React.ReactNode }) {
     }
   }, [history, loaded]);
 
-  const setScore = React.useCallback((key: LeverKey, value: number) => {
-    setScoresState((prev) => ({ ...prev, [key]: clamp(value) }));
+  const setAnswer = React.useCallback((questionId: string, optionId: string) => {
+    setAnswers((previous) => ({ ...previous, [questionId]: optionId }));
   }, []);
 
-  const setScores = React.useCallback((next: Scores) => {
-    setScoresState({
-      code: clamp(next.code),
-      media: clamp(next.media),
-      capital: clamp(next.capital),
-      labor: clamp(next.labor),
-    });
+  const resetDiagnosis = React.useCallback(() => {
+    setAnswers({});
   }, []);
 
   const togglePlay = React.useCallback((id: string) => {
@@ -138,30 +125,37 @@ export function LeverageProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const logSnapshot = React.useCallback(() => {
+    if (!diagnosis.complete) return;
     setHistory((prev) => {
+      if (prev.some((snapshot) => snapshot.runId === diagnosis.runId)) {
+        return prev;
+      }
       const snap: Snapshot = {
         t: Date.now(),
+        rubricVersion: diagnosis.rubricVersion,
+        runId: diagnosis.runId,
         scores: { ...scores },
-        index: leverageIndex(scores),
+        index: diagnosis.index,
+        confidence: diagnosis.confidence,
+        evidenceCount: diagnosis.answered,
+        constraint: diagnosis.constraint,
+        answers: { ...answers },
       };
-      const last = prev[prev.length - 1];
-      const rows =
-        last && startOfDay(last.t) === startOfDay(snap.t)
-          ? [...prev.slice(0, -1), snap]
-          : [...prev, snap];
-      return rows.slice(-60);
+      return [...prev, snap].slice(-60);
     });
-  }, [scores]);
+  }, [answers, diagnosis, scores]);
 
   const clearHistory = React.useCallback(() => setHistory([]), []);
 
   const value: LeverageValue = {
     loaded,
     scores,
-    setScore,
-    setScores,
-    constraint: bindingConstraint(scores),
-    index: leverageIndex(scores),
+    answers,
+    setAnswer,
+    resetDiagnosis,
+    diagnosis,
+    constraint: diagnosis.constraint,
+    index: diagnosis.index,
     completedPlays,
     togglePlay,
     history,

@@ -15,7 +15,7 @@ const ARC = [
   {
     step: "01",
     title: "Diagnose",
-    body: "Rate your four levers and surface the one gating the rest. You leave with a leverage index, a profile, and the single binding constraint named.",
+    body: "Audit sixteen factual checks across the four levers. You leave with an evidence-weighted index, confidence level, and the single strategic constraint named.",
   },
   {
     step: "02",
@@ -25,7 +25,7 @@ const ARC = [
   {
     step: "03",
     title: "Compound",
-    body: "Work the plays, re-measure, and watch your leverage index climb. Small inputs start moving loads that used to be out of the question.",
+    body: "Work the plays, collect the receipt, and rerun the same audit. Scores move only when users, audience, revenue, or delegated output actually move.",
   },
 ];
 
@@ -37,8 +37,8 @@ const CURE_SECTION = {
 
 const MAXX_SECTION = {
   label: "Leverage-maxxing",
-  title: "One diagnosis is a snapshot. The tracker turns it into a slope.",
-  body: "The tracker keeps a history of your scores, so every re-measure lands next to the last one and you see the line move. Run the protocols, log the reps, and watch your leverage index (the geometric mean of all four levers) climb until the whole system compounds.",
+  title: "One diagnosis is a claim. Receipts turn it into a slope.",
+  body: "The tracker preserves each completed evidence audit. Run the protocol, change a real metric, record the receipt, and compare the same checks until the binding constraint moves.",
 };
 
 function SectionLabel({
@@ -233,11 +233,12 @@ export default function Page() {
           <div className="flex flex-col gap-5">
             <SectionLabel index="II">Diagnose</SectionLabel>
             <h2 className="max-w-2xl text-balance text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
-              Rate your four levers. Find the one gating the rest.
+              Audit your four levers. Find the one gating the rest.
             </h2>
             <p className="max-w-xl text-pretty text-base leading-relaxed text-muted-foreground">
-              The slowest lever governs the whole system. Do not level everything.
-              Diagnose your binding constraint, then pour your effort there.
+              Every point needs a factual range. Code and Media come first because
+              they are permissionless. Diagnose the weaker one, then pour your
+              effort there until the evidence changes.
             </p>
           </div>
 
@@ -302,9 +303,8 @@ export default function Page() {
               How you stack against the most leveraged humans alive.
             </h2>
             <p className="max-w-xl text-pretty text-base leading-relaxed text-muted-foreground">
-              Same four levers, same scale. Notice who tops the board: the index
-              rewards maxing all four at once, which is why the richest man on it
-              is not the most leveraged.
+              Same four levers, same scale. The index rewards strength across all
+              four, so wealth alone does not determine the ranking.
             </p>
           </div>
 
@@ -340,15 +340,21 @@ export default function Page() {
         <div className="mx-auto flex max-w-xl flex-col items-center gap-6 text-center">
           <SectionLabel index="VII">The clinic</SectionLabel>
           <h2 className="text-balance text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
-            The guided clinic opens soon.
+            Follow the cure in public.
           </h2>
           <p className="text-pretty text-base leading-relaxed text-muted-foreground">
-            You have the diagnosis, the cures, and the tracker. The guided clinic
-            adds saved history across your devices, accountability, and a coach
-            that checks in. Be first in line.
+            One practical dispatch each week: the constraint, the action, the
+            receipt, and the score change. Watch Archimedes go from diagnosis to
+            compounding evidence.
           </p>
           <div className="mt-2 w-full max-w-md text-left">
-            <EmailCapture />
+            <EmailCapture
+              buttonLabel="Join the cure log"
+              helperText="Consent to receive one practical leverage email each week. No spam."
+              source="clinic-cure-log"
+              subject="archimedes.life cure log signup"
+              successMessage="You're on the cure log. The first field note will arrive by email."
+            />
           </div>
         </div>
       </section>

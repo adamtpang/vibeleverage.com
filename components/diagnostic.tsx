@@ -1,32 +1,76 @@
 "use client";
 
 import * as React from "react";
-import { Check, Copy, Share2 } from "lucide-react";
+import { ArrowRight, Check, Copy, RotateCcw, Share2 } from "lucide-react";
 
 import {
-  buildClaudePrompt,
+  DIAGNOSTIC_QUESTIONS,
+  buildImprovementPrompt,
+  type LeverScorecard,
+} from "@/lib/leverage-diagnostic";
+import {
   LEVERS,
   LEVER_BY_KEY,
   profile,
   scoreSlug,
-  type Lever,
-  type Scores,
+  type LeverKey,
 } from "@/lib/levers";
 import { useLeverage } from "@/components/leverage-store";
-import { FulcrumGlyph } from "@/components/lever-mark";
 import { cn } from "@/lib/utils";
 
-const DEFAULTS: Scores = { code: 50, media: 25, capital: 30, labor: 35 };
-const SAMPLE: Scores = { code: 85, media: 5, capital: 10, labor: 5 };
+const PROJECT_STORAGE_KEY = "archimedes:project:v1";
+
+function scoreTone(score: number) {
+  if (score >= 80) return "text-emerald-400";
+  if (score >= 40) return "text-lever";
+  return "text-foreground";
+}
 
 export function Diagnostic() {
-  const { scores, setScore, setScores, constraint, index } = useLeverage();
+  const {
+    answers,
+    setAnswer,
+    resetDiagnosis,
+    diagnosis,
+    scores,
+    constraint,
+    index,
+  } = useLeverage();
+  const [activeLever, setActiveLever] = React.useState<LeverKey>("code");
+  const [projectName, setProjectName] = React.useState("archimedes.life");
   const [copied, setCopied] = React.useState(false);
   const [shared, setShared] = React.useState(false);
 
+  React.useEffect(() => {
+    try {
+      const saved = localStorage.getItem(PROJECT_STORAGE_KEY);
+      if (saved) setProjectName(saved);
+    } catch {
+      /* storage unavailable */
+    }
+  }, []);
+
+  React.useEffect(() => {
+    try {
+      localStorage.setItem(PROJECT_STORAGE_KEY, projectName);
+    } catch {
+      /* storage unavailable */
+    }
+  }, [projectName]);
+
+  const activeQuestions = DIAGNOSTIC_QUESTIONS.filter(
+    (question) => question.lever === activeLever
+  );
   const constraintLever = LEVER_BY_KEY[constraint];
   const prof = profile(scores);
-  const prompt = React.useMemo(() => buildClaudePrompt(scores), [scores]);
+  const prompt = React.useMemo(
+    () => buildImprovementPrompt(diagnosis, projectName.trim() || "the relevant project"),
+    [diagnosis, projectName]
+  );
+  const constraintFindings = diagnosis.findings
+    .filter((finding) => finding.lever === constraint)
+    .slice(0, 2);
+  const prioritizedFinding = constraintFindings[0];
 
   async function copyPrompt() {
     try {
@@ -34,7 +78,7 @@ export function Diagnostic() {
       setCopied(true);
       window.setTimeout(() => setCopied(false), 2000);
     } catch {
-      /* clipboard blocked; the preview below is the manual fallback */
+      /* the preview below remains available */
     }
   }
 
@@ -49,228 +93,332 @@ export function Diagnostic() {
     }
   }
 
+  function nextLever() {
+    const current = LEVERS.findIndex((lever) => lever.key === activeLever);
+    const next = LEVERS[(current + 1) % LEVERS.length];
+    setActiveLever(next.key);
+  }
+
   return (
     <div className="flex flex-col gap-8">
-      <div className="grid gap-px overflow-hidden rounded-xl border border-border bg-border lg:grid-cols-[1.1fr_1fr]">
-        {/* ---- the sliders: your character sheet ---- */}
-        <div className="flex flex-col gap-7 bg-background p-7 sm:p-9">
-          <div className="flex items-center justify-between gap-4">
-            <p className="label text-[0.62rem] text-muted-foreground">
-              Rate each lever, 0 to 100
-            </p>
-            <div className="flex gap-2">
-              <button
-                type="button"
-                onClick={() => setScores(SAMPLE)}
-                className="rounded-md border border-border px-2.5 py-1 font-mono text-[0.65rem] uppercase tracking-wider text-muted-foreground transition-colors hover:border-lever/50 hover:text-lever"
-              >
-                Sample
-              </button>
-              <button
-                type="button"
-                onClick={() => setScores(DEFAULTS)}
-                className="rounded-md border border-border px-2.5 py-1 font-mono text-[0.65rem] uppercase tracking-wider text-muted-foreground transition-colors hover:border-lever/50 hover:text-lever"
-              >
-                Reset
-              </button>
+      <div className="grid overflow-hidden rounded-lg border border-border lg:grid-cols-[1.15fr_0.85fr]">
+        <div className="flex flex-col bg-background p-5 sm:p-8">
+          <div className="flex flex-col gap-4 border-b border-border pb-5 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="label text-[0.6rem] text-muted-foreground">
+                Evidence audit
+              </p>
+              <p className="mt-2 text-sm leading-relaxed text-foreground">
+                Select factual ranges. Unknown evidence cannot produce a high score.
+              </p>
             </div>
+            <button
+              type="button"
+              onClick={resetDiagnosis}
+              className="inline-flex h-9 items-center justify-center gap-2 self-start rounded-md border border-border px-3 text-xs font-medium text-muted-foreground transition-colors hover:border-lever/50 hover:text-foreground"
+            >
+              <RotateCcw className="h-3.5 w-3.5" />
+              Reset
+            </button>
           </div>
 
-          {LEVERS.map((lever) => (
-            <LeverRow
-              key={lever.key}
-              lever={lever}
-              value={scores[lever.key]}
-              isConstraint={constraint === lever.key}
-              onChange={(value) => setScore(lever.key, value)}
-            />
-          ))}
+          <div
+            className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-4"
+            role="tablist"
+            aria-label="Leverage categories"
+          >
+            {diagnosis.scorecards.map((scorecard) => (
+              <LeverTab
+                key={scorecard.lever}
+                scorecard={scorecard}
+                selected={scorecard.lever === activeLever}
+                onSelect={() => setActiveLever(scorecard.lever)}
+              />
+            ))}
+          </div>
+
+          <div className="mt-7 flex flex-col">
+            {activeQuestions.map((question, questionIndex) => (
+              <label
+                key={question.id}
+                className={cn(
+                  "block py-5",
+                  questionIndex > 0 && "border-t border-border"
+                )}
+              >
+                <span className="flex items-baseline justify-between gap-4">
+                  <span className="text-sm font-semibold text-foreground">
+                    {question.title}
+                  </span>
+                  <span className="font-mono text-[0.62rem] text-muted-foreground">
+                    weight {question.weight}
+                  </span>
+                </span>
+                <span className="mt-1.5 block text-sm leading-relaxed text-muted-foreground">
+                  {question.prompt}
+                </span>
+                <select
+                  value={answers[question.id] ?? ""}
+                  onChange={(event) => setAnswer(question.id, event.target.value)}
+                  className="mt-3 h-11 w-full rounded-md border border-input bg-secondary/30 px-3 text-sm text-foreground outline-none transition-colors focus:border-lever focus:ring-1 focus:ring-lever"
+                >
+                  <option value="">Select the current factual range</option>
+                  {question.options.map((option) => (
+                    <option key={option.id} value={option.id}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            ))}
+          </div>
+
+          <button
+            type="button"
+            onClick={nextLever}
+            className="mt-2 inline-flex h-11 items-center justify-center gap-2 self-start rounded-md border border-lever/40 px-4 text-sm font-semibold text-lever transition-colors hover:bg-lever/10"
+          >
+            Next lever
+            <ArrowRight className="h-4 w-4" />
+          </button>
         </div>
 
-        {/* ---- the readout: your diagnosis ---- */}
-        <div className="flex flex-col gap-6 bg-background p-7 sm:p-9">
+        <div className="flex flex-col gap-6 border-t border-border bg-secondary/10 p-5 sm:p-8 lg:border-l lg:border-t-0">
           <div className="flex items-start justify-between gap-4">
             <div>
               <p className="label text-[0.6rem] text-muted-foreground">Profile</p>
               <p className="mt-1 text-xl font-semibold tracking-tight">
-                {prof.label}
+                {diagnosis.complete ? prof.label : "Audit incomplete"}
               </p>
             </div>
             <div className="text-right">
               <p className="label text-[0.6rem] text-muted-foreground">Index</p>
               <p className="mt-1 font-mono text-xl font-semibold tabular-nums text-lever">
-                {index}
+                {diagnosis.complete ? index : "--"}
                 <span className="text-sm text-muted-foreground">/100</span>
               </p>
             </div>
           </div>
 
-          <p className="text-sm leading-relaxed text-muted-foreground">
-            {prof.blurb}
-          </p>
+          <div>
+            <div className="flex items-center justify-between gap-4 text-xs text-muted-foreground">
+              <span>Evidence confidence</span>
+              <span className="font-mono tabular-nums">
+                {diagnosis.answered}/{diagnosis.total} checks
+              </span>
+            </div>
+            <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-secondary">
+              <div
+                className="h-full bg-lever transition-[width] duration-300"
+                style={{ width: `${diagnosis.confidence}%` }}
+              />
+            </div>
+          </div>
 
-          <div className="h-px bg-border" />
+          <div className="divide-y divide-border border-y border-border">
+            {diagnosis.scorecards.map((scorecard) => (
+              <div
+                key={scorecard.lever}
+                className="flex items-center justify-between gap-4 py-3"
+              >
+                <div>
+                  <p className="text-sm font-medium">{scorecard.label}</p>
+                  <p className="mt-0.5 text-xs text-muted-foreground">
+                    {scorecard.answered}/{scorecard.total} checks answered
+                  </p>
+                </div>
+                <p
+                  className={cn(
+                    "font-mono text-lg font-semibold tabular-nums",
+                    scorecard.confidence === 100 && scoreTone(scorecard.score)
+                  )}
+                >
+                  {scorecard.confidence === 100 ? scorecard.score : "--"}
+                </p>
+              </div>
+            ))}
+          </div>
 
           <div>
             <p className="label text-[0.6rem] text-muted-foreground">
-              Binding constraint
+              {diagnosis.complete ? "Strategic constraint" : "Provisional direction"}
             </p>
-            <div className="mt-1.5 flex items-baseline gap-3">
+            <div className="mt-1.5 flex flex-wrap items-baseline gap-3">
               <span className="text-2xl font-semibold tracking-tight text-lever">
                 {constraintLever.name}
               </span>
-              <span className="font-mono text-[0.65rem] uppercase tracking-[0.2em] text-muted-foreground">
-                attack this
+              <span className="font-mono text-[0.62rem] uppercase tracking-[0.18em] text-muted-foreground">
+                permissionless first
               </span>
             </div>
             <p className="mt-3 text-sm leading-relaxed text-foreground">
-              {constraintLever.constraintRx}
+              {diagnosis.complete
+                ? constraintLever.constraintRx
+                : "Finish the unanswered checks before treating this as a verified constraint."}
             </p>
           </div>
 
-          <div>
+          <div className="mt-auto">
             <p className="label mb-3 text-[0.6rem] text-muted-foreground">
-              Your next moves
+              Highest-impact evidence gaps
             </p>
-            <ul className="space-y-2.5">
-              {constraintLever.moves.map((move) => (
-                <li key={move} className="flex gap-2.5 text-sm leading-relaxed">
-                  <FulcrumGlyph className="mt-[0.35rem] text-lever" />
-                  <span>{move}</span>
-                </li>
+            <div className="space-y-4">
+              {constraintFindings.map((finding) => (
+                <div key={finding.id}>
+                  <p className="text-sm font-medium text-foreground">
+                    {finding.title}
+                  </p>
+                  <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+                    Evidence: {finding.evidence}
+                  </p>
+                  <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+                    Next receipt: {finding.acceptance}
+                  </p>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
 
-          <p className="mt-auto pt-2 text-xs leading-relaxed text-muted-foreground/70">
-            Index is the geometric mean of all four levers. One dead lever drags
-            the whole system down, so balance beats a single maxed stat.
+          <p className="text-xs leading-relaxed text-muted-foreground/70">
+            Capital and labor remain visible, but Code and Media stay strategic
+            until both reach repeatable traction. AI agents count as Code, not Labor.
           </p>
         </div>
       </div>
 
-      {/* ---- turn the diagnosis into a plan with Claude ---- */}
-      <div className="rounded-xl border border-border bg-background p-7 sm:p-9">
-        <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
-          <div className="max-w-md">
+      <div className="rounded-lg border border-border bg-background p-5 sm:p-8">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+          <div className="max-w-xl">
             <p className="label text-[0.6rem] text-muted-foreground">
-              Turn this into a plan
+              Implementation-ready cure
             </p>
             <h3 className="mt-2 text-lg font-semibold tracking-tight">
-              Hand your diagnosis to Claude
+              Generate the next improvement cycle
             </h3>
             <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-              Generate a prompt tuned to your binding constraint (
-              <span className="text-lever">{constraintLever.name}</span>). Paste
-              it into Claude Code to scaffold a plan as real files, or into
-              claude.ai to start coaching with Archimedes.
+              The prompt carries your evidence, the binding constraint, guardrails,
+              acceptance tests, and the diagnose to cure to rescan stopping rule.
             </p>
           </div>
-          <div className="flex shrink-0 flex-col gap-2">
-            <button
-              type="button"
-              onClick={copyPrompt}
-              className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-lever px-5 text-sm font-semibold text-background transition-colors hover:bg-lever/90"
-            >
-              {copied ? (
-                <>
-                  <Check className="h-4 w-4" strokeWidth={3} />
-                  Copied
-                </>
-              ) : (
-                <>
-                  <Copy className="h-4 w-4" />
-                  Copy Claude prompt
-                </>
-              )}
-            </button>
-            <button
-              type="button"
-              onClick={shareCard}
-              className="inline-flex h-11 items-center justify-center gap-2 rounded-md border border-border px-5 text-sm font-medium text-muted-foreground transition-colors hover:border-lever/50 hover:text-foreground"
-            >
-              {shared ? (
-                <>
-                  <Check className="h-4 w-4" strokeWidth={3} />
-                  Link copied
-                </>
-              ) : (
-                <>
-                  <Share2 className="h-4 w-4" />
-                  Share your card
-                </>
-              )}
-            </button>
-            <a
-              href="https://claude.ai/new"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex h-11 items-center justify-center rounded-md border border-border px-5 text-sm font-medium text-muted-foreground transition-colors hover:border-lever/50 hover:text-foreground"
-            >
-              Open claude.ai
-            </a>
+          <div className="w-full max-w-sm">
+            <label className="text-xs text-muted-foreground" htmlFor="project-name">
+              Relevant project or repository
+            </label>
+            <input
+              id="project-name"
+              value={projectName}
+              onChange={(event) => setProjectName(event.target.value)}
+              className="mt-2 h-11 w-full rounded-md border border-input bg-secondary/30 px-3 text-sm text-foreground outline-none transition-colors focus:border-lever focus:ring-1 focus:ring-lever"
+              placeholder="archimedes.life"
+            />
           </div>
         </div>
+
+        <div className="mt-5 flex flex-col gap-2 sm:flex-row">
+          <button
+            type="button"
+            onClick={copyPrompt}
+            className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-lever px-5 text-sm font-semibold text-background transition-colors hover:bg-lever/90"
+          >
+            {copied ? (
+              <>
+                <Check className="h-4 w-4" strokeWidth={3} />
+                Copied
+              </>
+            ) : (
+              <>
+                <Copy className="h-4 w-4" />
+                Copy improvement prompt
+              </>
+            )}
+          </button>
+          <button
+            type="button"
+            onClick={shareCard}
+            disabled={!diagnosis.complete}
+            className="inline-flex h-11 items-center justify-center gap-2 rounded-md border border-border px-5 text-sm font-medium text-muted-foreground transition-colors hover:border-lever/50 hover:text-foreground disabled:cursor-not-allowed disabled:opacity-40"
+          >
+            {shared ? (
+              <>
+                <Check className="h-4 w-4" strokeWidth={3} />
+                Link copied
+              </>
+            ) : (
+              <>
+                <Share2 className="h-4 w-4" />
+                Share verified card
+              </>
+            )}
+          </button>
+        </div>
+
+        {!diagnosis.complete && (
+          <p className="mt-3 text-xs text-muted-foreground">
+            Complete all {diagnosis.total} checks before sharing or recording a receipt.
+            The improvement prompt can still help close missing evidence.
+          </p>
+        )}
 
         <details className="mt-6">
           <summary className="cursor-pointer select-none font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-foreground">
             Preview prompt
           </summary>
-          <pre className="mt-3 max-h-80 overflow-auto whitespace-pre-wrap rounded-lg border border-border bg-secondary/30 p-4 font-mono text-xs leading-relaxed text-muted-foreground/90">{prompt}</pre>
+          <pre className="mt-3 max-h-96 overflow-auto whitespace-pre-wrap rounded-md border border-border bg-secondary/30 p-4 font-mono text-xs leading-relaxed text-muted-foreground/90">
+            {prompt}
+          </pre>
         </details>
+
+        {diagnosis.complete && prioritizedFinding && (
+          <div className="mt-8 grid gap-5 border-t border-border pt-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+            <div>
+              <p className="label text-[0.6rem] text-muted-foreground">
+                First cure receipt
+              </p>
+              <h3 className="mt-2 text-lg font-semibold tracking-tight">
+                {prioritizedFinding.title}
+              </h3>
+            </div>
+            <div>
+              <p className="text-sm leading-relaxed text-foreground">
+                {prioritizedFinding.recommendation}
+              </p>
+              <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+                Done when: {prioritizedFinding.acceptance}
+              </p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
 }
 
-function LeverRow({
-  lever,
-  value,
-  isConstraint,
-  onChange,
+function LeverTab({
+  scorecard,
+  selected,
+  onSelect,
 }: {
-  lever: Lever;
-  value: number;
-  isConstraint: boolean;
-  onChange: (value: number) => void;
+  scorecard: LeverScorecard;
+  selected: boolean;
+  onSelect: () => void;
 }) {
   return (
-    <div>
-      <div className="flex items-baseline justify-between gap-3">
-        <div className="flex items-baseline gap-2.5">
-          <span className="font-mono text-[0.7rem] text-muted-foreground">
-            {lever.id}
-          </span>
-          <span
-            className={cn(
-              "text-base font-semibold tracking-tight",
-              isConstraint && "text-lever"
-            )}
-          >
-            {lever.name}
-          </span>
-          {isConstraint && (
-            <span className="label rounded bg-lever/15 px-1.5 py-0.5 text-[0.55rem] text-lever">
-              binding
-            </span>
-          )}
-        </div>
-        <span className="font-mono text-sm tabular-nums">{value}</span>
-      </div>
-      <input
-        type="range"
-        min={0}
-        max={100}
-        value={value}
-        onChange={(event) => onChange(Number(event.target.value))}
-        aria-label={`${lever.name} leverage, 0 to 100`}
-        aria-valuetext={`${value} of 100`}
-        className="lever-range mt-3 w-full"
-        style={{ "--pct": `${value}%` } as React.CSSProperties}
-      />
-      <p className="mt-2 text-xs leading-relaxed text-muted-foreground/80">
-        {lever.what}
-      </p>
-    </div>
+    <button
+      type="button"
+      role="tab"
+      aria-selected={selected}
+      onClick={onSelect}
+      className={cn(
+        "flex h-12 items-center justify-between gap-2 rounded-md border px-3 text-left transition-colors",
+        selected
+          ? "border-lever/60 bg-lever/10 text-foreground"
+          : "border-border text-muted-foreground hover:border-lever/40 hover:text-foreground"
+      )}
+    >
+      <span className="text-xs font-semibold">{scorecard.label}</span>
+      <span className="font-mono text-xs tabular-nums">
+        {scorecard.answered}/{scorecard.total}
+      </span>
+    </button>
   );
 }

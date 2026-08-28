@@ -21,6 +21,8 @@
 
 # Fulcrum Media job state (local-only feature)
 /.fulcrum
+# Private leverage diagnoses and generated cure prompts
+/.archimedes
 *.pem
 
 # debug

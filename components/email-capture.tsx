@@ -19,7 +19,21 @@ type Status = "idle" | "invalid" | "submitting" | "done" | "error";
 
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 
-export function EmailCapture() {
+type EmailCaptureProps = {
+  buttonLabel?: string;
+  helperText?: string;
+  source?: string;
+  subject?: string;
+  successMessage?: string;
+};
+
+export function EmailCapture({
+  buttonLabel = "Get diagnosed",
+  helperText = "One lever-sharpening email when we open. No spam, ever.",
+  source = "hero",
+  subject = "archimedes.life signup",
+  successMessage = "On the list. We'll send your diagnosis the day the doors open.",
+}: EmailCaptureProps = {}) {
   const [email, setEmail] = React.useState("");
   const [status, setStatus] = React.useState<Status>("idle");
 
@@ -42,7 +56,8 @@ export function EmailCapture() {
         },
         body: JSON.stringify({
           email: value,
-          _subject: "archimedes.life signup",
+          source,
+          _subject: subject,
         }),
       });
       if (!res.ok) throw new Error("Request failed");
@@ -62,9 +77,7 @@ export function EmailCapture() {
         <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-lever text-background">
           <Check className="h-3 w-3" strokeWidth={3} />
         </span>
-        <span className="text-foreground">
-          On the list. We&rsquo;ll send your diagnosis the day the doors open.
-        </span>
+        <span className="text-foreground">{successMessage}</span>
       </div>
     );
   }
@@ -92,7 +105,7 @@ export function EmailCapture() {
           disabled={status === "submitting"}
           className="group h-12 gap-2 px-6 text-base font-semibold"
         >
-          {status === "submitting" ? "Sending…" : "Get diagnosed"}
+          {status === "submitting" ? "Sending..." : buttonLabel}
           <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
         </Button>
       </div>
@@ -103,7 +116,7 @@ export function EmailCapture() {
           <span className="text-destructive">Something went wrong. Try again.</span>
         ) : (
           <span className="text-muted-foreground/70">
-            One lever-sharpening email when we open. No spam, ever.
+            {helperText}
           </span>
         )}
       </p>

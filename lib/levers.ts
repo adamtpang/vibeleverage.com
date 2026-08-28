@@ -97,12 +97,23 @@ export type Scores = Record<LeverKey, number>;
 // (brand, distribution, inbound); labor the least. So among equal-lowest
 // levers, attack the one nearer the front of this list first.
 const PRIORITY: LeverKey[] = ["media", "code", "capital", "labor"];
+const PERMISSIONLESS: LeverKey[] = ["media", "code"];
+const PERMISSIONLESS_FLOOR = 60;
 
-/** The slowest lever gates the whole system. Lowest score wins; ties break by PRIORITY. */
+/**
+ * Code and media come first because a person can pull them without permission.
+ * Capital follows after both permissionless levers have repeatable traction,
+ * then Labor follows after Capital. Within Code and Media, lowest score wins
+ * and ties break by PRIORITY.
+ */
 export function bindingConstraint(scores: Scores): LeverKey {
+  if (PERMISSIONLESS.every((key) => scores[key] >= PERMISSIONLESS_FLOOR)) {
+    return scores.capital < PERMISSIONLESS_FLOOR ? "capital" : "labor";
+  }
   let best: LeverKey = PRIORITY[0];
   let bestScore = Infinity;
   for (const key of PRIORITY) {
+    if (!PERMISSIONLESS.includes(key)) continue;
     if (scores[key] < bestScore) {
       bestScore = scores[key];
       best = key;
@@ -139,6 +150,18 @@ export function profile(scores: Scores): { label: string; blurb: string } {
       label: "Glass cannon",
       blurb:
         "High single-target output, almost no compounding surface. One stat carries you while the rest sit dead.",
+    };
+  }
+  if (
+    scores.code >= 30 &&
+    scores.media <= 20 &&
+    scores.capital <= 20 &&
+    scores.labor <= 20
+  ) {
+    return {
+      label: "Private builder",
+      blurb:
+        "You can make things, but adoption, distribution, ownership, and delegated output are still thin. Turn one build into a repeatable public loop.",
     };
   }
   if (max <= 30) {
@@ -338,6 +361,12 @@ export const HISTORY_KEY = "archimedes:history:v1";
 
 export interface Snapshot {
   t: number;
+  rubricVersion?: string;
+  runId?: string;
   scores: Scores;
   index: number;
+  confidence?: number;
+  evidenceCount?: number;
+  constraint?: LeverKey;
+  answers?: Record<string, string>;
 }

@@ -52,6 +52,7 @@ export function LeverageTracker() {
   const {
     scores,
     index,
+    diagnosis,
     history,
     logSnapshot,
     completedPlays,
@@ -59,24 +60,27 @@ export function LeverageTracker() {
     constraint,
   } = useLeverage();
 
-  const first = history[0];
+  const comparableHistory = history.filter(
+    (snapshot) => snapshot.rubricVersion === diagnosis.rubricVersion
+  );
+  const first = comparableHistory[0];
   const delta = first ? index - first.index : 0;
   const daysActive = new Set(
-    history.map((s) => {
+    comparableHistory.map((s) => {
       const d = new Date(s.t);
       d.setHours(0, 0, 0, 0);
       return d.getTime();
     })
   ).size;
 
-  const np = nextPlay(scores, completedPlays);
+  const np = diagnosis.complete ? nextPlay(scores, completedPlays) : null;
   const constraintName = CURES[constraint].name;
-  const values = history.map((s) => s.index);
+  const values = comparableHistory.map((s) => s.index);
 
   const metrics = [
-    { label: "Index", value: `${index}` },
+    { label: "Index", value: diagnosis.complete ? `${index}` : "--" },
     { label: "Change", value: `${delta >= 0 ? "+" : ""}${delta}` },
-    { label: "Plays done", value: `${completedPlays.size}` },
+    { label: "Receipts", value: `${comparableHistory.length}` },
     { label: "Days active", value: `${daysActive}` },
   ];
 
@@ -90,11 +94,11 @@ export function LeverageTracker() {
               Leverage index
             </p>
             <p className="mt-1 font-mono text-4xl font-semibold tabular-nums text-lever">
-              {index}
+              {diagnosis.complete ? index : "--"}
               <span className="text-lg text-muted-foreground">/100</span>
             </p>
           </div>
-          {history.length > 0 && (
+          {comparableHistory.length > 0 && (
             <p className="font-mono text-sm tabular-nums text-muted-foreground">
               {delta >= 0 ? "+" : ""}
               {delta} since first check-in
@@ -126,21 +130,31 @@ export function LeverageTracker() {
         <button
           type="button"
           onClick={logSnapshot}
-          className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-lever px-5 text-sm font-semibold text-background transition-colors hover:bg-lever/90"
+          disabled={!diagnosis.complete}
+          className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-lever px-5 text-sm font-semibold text-background transition-colors hover:bg-lever/90 disabled:cursor-not-allowed disabled:opacity-40"
         >
           <Plus className="h-4 w-4" strokeWidth={2.5} />
-          Log today&rsquo;s scores
+          Record evidence receipt
         </button>
         <p className="text-xs leading-relaxed text-muted-foreground/70">
-          Re-rating your levers is the check-in. Snapshot them whenever you
-          re-measure and watch the line move. Saved to this browser only.
+          {diagnosis.complete
+            ? "Each receipt preserves the evidence bands and scores from that run. Re-audit only after the underlying facts change. Saved to this browser only."
+            : `Complete all ${diagnosis.total} evidence checks before recording a receipt. ${diagnosis.answered} are answered now.`}
         </p>
       </div>
 
       {/* next play */}
       <div className="flex flex-col gap-4 bg-background p-7 sm:p-9">
         <p className="label text-[0.6rem] text-muted-foreground">Your next play</p>
-        {np ? (
+        {!diagnosis.complete ? (
+          <div className="flex flex-1 flex-col justify-center gap-3">
+            <FulcrumGlyph className="text-lever" />
+            <p className="text-sm leading-relaxed text-foreground">
+              Complete the evidence audit before starting a cure cycle. A tracker
+              without a verified baseline only records self-confidence.
+            </p>
+          </div>
+        ) : np ? (
           <>
             <div className="flex items-baseline gap-3">
               <span className="text-lg font-semibold tracking-tight text-lever">

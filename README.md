@@ -1,8 +1,8 @@
 # archimedes.life
 
 The leverage diagnosis. Find and cure the four levers you're under-using:
-**code, media, capital, labor**. Rate yourself on each, find your binding
-constraint, and get the one move to attack it.
+**code, media, capital, labor**. Audit factual evidence, find the binding
+constraint, and get one measurable improvement cycle.
 
 > "Give me a lever long enough and a place to stand, and I will move the world."
 > Archimedes
@@ -25,12 +25,23 @@ npm run dev      # http://localhost:3000
 npm run build    # production build
 ```
 
-## Email capture (TODO before launch)
+## Diagnostic engine
 
-The hero form in [`components/email-capture.tsx`](components/email-capture.tsx)
-validates and acknowledges in the browser but does **not** persist anywhere yet.
-Wire it up by setting `FORMSPREE_ENDPOINT` to a real endpoint (e.g. a
-[Formspree](https://formspree.io) form ID). Search the file for `TODO(launch)`.
+The versioned rubric in [`lib/leverage-diagnostic.ts`](lib/leverage-diagnostic.ts)
+scores 16 evidence checks across the four levers. Unknown evidence reduces
+confidence instead of earning points. Completed audits generate a prompt that
+attacks one binding check and records comparable before and after receipts in
+the browser.
+
+Run `npm test` to verify the rubric, strategic sequencing, prompt guardrails,
+and frontier scoring behavior.
+
+## Email capture
+
+The forms in [`components/email-capture.tsx`](components/email-capture.tsx)
+post consenting signups through FormSubmit. The first live submission may
+require a one-time activation from the destination inbox. Move to a proper
+email service provider before operating a recurring or larger list.
 
 ## Chat with Archimedes (AI agent)
 

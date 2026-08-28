@@ -38,6 +38,13 @@ export const ANCHORS: Anchor[] = [
     scores: { code: 70, media: 90, capital: 90, labor: 35 },
   },
   {
+    key: "torvalds",
+    name: "Linus Torvalds",
+    tag: "Code pinned at the ceiling",
+    note: "Created Linux and built an ecosystem that now runs across servers, cloud infrastructure, and billions of devices without depending on his hours.",
+    scores: { code: 100, media: 30, capital: 15, labor: 65 },
+  },
+  {
     key: "mrbeast",
     name: "MrBeast",
     tag: "Media pinned at the ceiling",
@@ -47,8 +54,8 @@ export const ANCHORS: Anchor[] = [
   {
     key: "buffett",
     name: "Warren Buffett",
-    tag: "Richest is not most leveraged",
-    note: "The deepest capital stack alive, run from a famously tiny headquarters. Code near zero is exactly why the biggest fortune here does not top this list.",
+    tag: "Capital pinned at the ceiling",
+    note: "A frontier capital stack run from a famously small headquarters. The specialization shows why capital alone does not top the combined index.",
     scores: { code: 3, media: 50, capital: 100, labor: 70 },
   },
 ];

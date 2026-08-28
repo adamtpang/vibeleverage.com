@@ -27,6 +27,24 @@ as a starting point, then inspect the actual code and docs before making changes
   context inline.
 - Prefer concrete project facts over generic instructions.
 
+## Current product state
+
+- The homepage contains an evidence-based 16-check leverage audit covering
+  Code, Media, Capital, and Labor.
+- The rubric is versioned in `lib/leverage-diagnostic.ts`. Unknown checks reduce
+  confidence, all four scores stay independent, and a verified 100 requires
+  complete frontier evidence.
+- Strategic sequencing is permissionless first: raise Code and Media to
+  repeatable traction, then Capital, then Labor.
+- A completed audit generates one project-specific cure prompt with an exact
+  acceptance receipt. Comparable audit receipts are kept in localStorage.
+- The email capture posts consenting signups through FormSubmit. A proper email
+  service provider is still needed before operating a recurring or larger list.
+- The current personal baseline is stored only in the gitignored `.archimedes`
+  directory. Do not publish private diagnosis artifacts.
+- Validation commands are `npm test`, `npx tsc --noEmit`, and `npm run build`.
+- Local UI verification uses Helium Harness against `http://localhost:3010`.
+
 ## Imported existing context
 
 Source: `README.md`
