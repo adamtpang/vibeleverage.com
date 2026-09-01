@@ -6,9 +6,9 @@ canonical-template: summon.company/templates/STATUS.md
 update-rule: Change claims only when dated evidence changes.
 -->
 
-**As of:** 2026-08-29
+**As of:** 2026-09-01
 **Repository:** `vibeleverage.com`
-**Public surface:** Not verified in the inspected evidence
+**Public surface:** `https://vibeleverage.com` verified live with HTTP 200 on 2026-09-01
 **Lifecycle:** Working diagnostic prototype, pre-offer
 **Overall status:** The four-lever audit and cure-prompt machinery are real, but the customer, paid cure, and external result remain undefined.
 
@@ -25,7 +25,7 @@ Vibe Leverage audits factual evidence across code, media, capital, and labor, id
 
 ## Current truth
 
-The homepage contains a versioned 16-check audit across four independent levers. Unknown evidence reduces confidence, completed audits generate a project-specific cure prompt, and comparable receipts stay in the browser. Vibe Media can transcribe, propose cuts, and package a podcast episode while keeping publication human-controlled. The current `NORTH_STAR.md`, `EVIDENCE.md`, and `OFFER.md` still contain generic buyer, pain, price, and proof placeholders.
+The homepage contains a versioned 16-check audit across four independent levers. Unknown evidence reduces confidence, completed audits generate a project-specific cure prompt, and comparable receipts stay in the browser. Vibe Media can transcribe, propose cuts, and package a podcast episode while keeping publication human-controlled. The product, GitHub repository, Vercel project, canonical metadata, and public domain now use the Vibe Leverage identity. The current `OFFER.md` still lacks a verified paid-customer receipt.
 
 ### Verified evidence
 
@@ -33,6 +33,8 @@ The homepage contains a versioned 16-check audit across four independent levers.
 - `README.md` documents local before-and-after receipts and validation through `npm test`.
 - `CLAUDE.md` records the current audit, prompt, FormSubmit, and private `.vibeleverage` baseline boundaries.
 - `lib/vibe/media-jobs.ts` provides a reviewed media packaging path.
+- Vercel deployment `dpl_6fj6CGpeXuWWJJdMe9QSggzzzVfP` is Ready in production and serves `https://vibeleverage.com` with canonical metadata on the same origin.
+- `https://archimedes.life` remains attached only to transfer existing non-secret browser evidence through `/migrate` before continuing on the new domain.
 - No stranger revenue, active customer, weekly usage, or paid offer receipt is recorded.
 
 ### Revenue chain
@@ -60,7 +62,7 @@ The diagnostic has breadth, but no evidence yet shows which user values which le
 | 3 | Workspace | PASS | The app, rubric, tests, Vibe code, and operating documents exist. |
 | 4 | Organization | PARTIAL | Vibe responsibilities begin to exist, but no active company formation is evidenced. |
 | 5 | Skills | PASS | Audit, diagnosis, cure prompt, and media packaging capabilities exist. |
-| 6 | Runtime | PARTIAL | The app and chat paths are documented; no current public runtime receipt was inspected. |
+| 6 | Runtime | PASS | The production deployment, canonical domain, aliases, metadata, and former-domain migration redirect were verified on 2026-09-01. |
 | 7 | Governance | PASS | Private diagnosis, API key, review, and publication boundaries are explicit. |
 | 8 | Critical path | MISSING | No single buyer-specific path from diagnosis to valuable cure is ratified. |
 | 9 | Execution | PARTIAL | Vibe Media can execute a bounded workflow, but no measured cure is logged. |
