@@ -31,7 +31,7 @@ export function EmailCapture({
   buttonLabel = "Get diagnosed",
   helperText = "One lever-sharpening email when we open. No spam, ever.",
   source = "hero",
-  subject = "archimedes.life signup",
+  subject = "vibeleverage.com signup",
   successMessage = "On the list. We'll send your diagnosis the day the doors open.",
 }: EmailCaptureProps = {}) {
   const [email, setEmail] = React.useState("");

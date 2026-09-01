@@ -14,24 +14,24 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
-const title = "archimedes · the leverage diagnosis";
+const title = "vibe leverage · diagnose, cure, maxx";
 const description =
-  "Diagnose which of the four levers (code, media, capital, labor) is holding you back, get a cure protocol, and unlock the $49 founding license.";
+  "Score Vibe Code, Vibe Media, Vibe Capital, and Vibe Labor. Find the binding constraint, run one cure, and track the evidence.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://archimedes.life"),
+  metadataBase: new URL("https://vibeleverage.com"),
   title: {
     default: title,
-    template: "%s · archimedes",
+    template: "%s · vibe leverage",
   },
   description,
-  applicationName: "archimedes",
-  authors: [{ name: "archimedes" }],
+  applicationName: "Vibe Leverage",
+  authors: [{ name: "Vibe Leverage" }],
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
-    url: "https://archimedes.life",
-    siteName: "archimedes",
+    url: "https://vibeleverage.com",
+    siteName: "Vibe Leverage",
     title,
     description,
   },
@@ -59,10 +59,10 @@ const jsonLd = {
   "@graph": [
     {
       "@type": "Organization",
-      "@id": "https://archimedes.life/#organization",
-      name: "archimedes",
-      url: "https://archimedes.life",
-      logo: "https://archimedes.life/icon.svg",
+      "@id": "https://vibeleverage.com/#organization",
+      name: "Vibe Leverage",
+      url: "https://vibeleverage.com",
+      logo: "https://vibeleverage.com/icon.svg",
       founder: {
         "@type": "Person",
         name: "Adam Pang",
@@ -76,7 +76,7 @@ const jsonLd = {
         availability: "https://schema.org/InStock",
         itemOffered: {
           "@type": "Product",
-          name: "archimedes founding license",
+          name: "Vibe Leverage founding license",
           description:
             "An interactive leverage diagnosis that identifies which of the four levers (labor, capital, code, media) you are underusing and prescribes a 90-day cure protocol.",
         },
@@ -84,12 +84,12 @@ const jsonLd = {
     },
     {
       "@type": "WebSite",
-      "@id": "https://archimedes.life/#website",
-      url: "https://archimedes.life",
-      name: "archimedes · the leverage diagnosis",
+      "@id": "https://vibeleverage.com/#website",
+      url: "https://vibeleverage.com",
+      name: "Vibe Leverage · diagnose, cure, maxx",
       description,
-      author: { "@id": "https://archimedes.life/#organization" },
-      publisher: { "@id": "https://archimedes.life/#organization" },
+      author: { "@id": "https://vibeleverage.com/#organization" },
+      publisher: { "@id": "https://vibeleverage.com/#organization" },
     },
   ],
 };

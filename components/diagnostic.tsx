@@ -16,9 +16,10 @@ import {
   type LeverKey,
 } from "@/lib/levers";
 import { useLeverage } from "@/components/leverage-store";
+import { readStoredValue, STORAGE_KEYS } from "@/lib/storage-keys";
 import { cn } from "@/lib/utils";
 
-const PROJECT_STORAGE_KEY = "archimedes:project:v1";
+const PROJECT_STORAGE_KEY = STORAGE_KEYS.project;
 
 function scoreTone(score: number) {
   if (score >= 80) return "text-emerald-400";
@@ -37,26 +38,30 @@ export function Diagnostic() {
     index,
   } = useLeverage();
   const [activeLever, setActiveLever] = React.useState<LeverKey>("code");
-  const [projectName, setProjectName] = React.useState("archimedes.life");
+  const [projectName, setProjectName] = React.useState("vibeleverage.com");
+  const [projectLoaded, setProjectLoaded] = React.useState(false);
   const [copied, setCopied] = React.useState(false);
   const [shared, setShared] = React.useState(false);
 
   React.useEffect(() => {
     try {
-      const saved = localStorage.getItem(PROJECT_STORAGE_KEY);
+      const saved = readStoredValue("project");
       if (saved) setProjectName(saved);
     } catch {
       /* storage unavailable */
+    } finally {
+      setProjectLoaded(true);
     }
   }, []);
 
   React.useEffect(() => {
+    if (!projectLoaded) return;
     try {
       localStorage.setItem(PROJECT_STORAGE_KEY, projectName);
     } catch {
       /* storage unavailable */
     }
-  }, [projectName]);
+  }, [projectLoaded, projectName]);
 
   const activeQuestions = DIAGNOSTIC_QUESTIONS.filter(
     (question) => question.lever === activeLever
@@ -309,7 +314,7 @@ export function Diagnostic() {
               value={projectName}
               onChange={(event) => setProjectName(event.target.value)}
               className="mt-2 h-11 w-full rounded-md border border-input bg-secondary/30 px-3 text-sm text-foreground outline-none transition-colors focus:border-lever focus:ring-1 focus:ring-lever"
-              placeholder="archimedes.life"
+              placeholder="vibeleverage.com"
             />
           </div>
         </div>

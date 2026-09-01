@@ -96,7 +96,7 @@ export async function POST(req: Request) {
     return Response.json(
       {
         error:
-          "Archimedes has no key yet. Paste your own Anthropic API key below to talk now, or use Copy Claude prompt in the Diagnose section.",
+          "Vibe Coach has no key yet. Paste your own Anthropic API key below to talk now, or use Copy improvement prompt in the Diagnose section.",
       },
       { status: 503 }
     );
@@ -131,7 +131,7 @@ export async function POST(req: Request) {
           encoder.encode(
             err instanceof Anthropic.AuthenticationError
               ? "\n\n[Anthropic rejected that API key. Check it and paste it again.]"
-              : "\n\n[Archimedes hit an error. Try again.]"
+              : "\n\n[Vibe Coach hit an error. Try again.]"
           )
         );
       } finally {

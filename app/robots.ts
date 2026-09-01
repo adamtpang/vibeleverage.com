@@ -11,6 +11,6 @@ export default function robots(): MetadataRoute.Robots {
       { userAgent: 'PerplexityBot', allow: '/' },
       { userAgent: 'Google-Extended', allow: '/' },
     ],
-    sitemap: 'https://archimedes.life/sitemap.xml',
+    sitemap: 'https://vibeleverage.com/sitemap.xml',
   }
 }

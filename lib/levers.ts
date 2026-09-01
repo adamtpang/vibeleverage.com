@@ -1,5 +1,6 @@
 import { ANCHORS } from "./anchors";
 import curesJson from "./cures.json";
+import { STORAGE_KEYS } from "./storage-keys";
 
 export type LeverKey = "code" | "media" | "capital" | "labor";
 
@@ -23,7 +24,7 @@ export const LEVERS: Lever[] = [
   {
     key: "code",
     id: "01",
-    name: "Code",
+    name: "Vibe Code",
     what: "Output that runs without you. AI fluency folds in here.",
     symptom:
       "You still do by hand what a script would do ten thousand times, for free, while you sleep.",
@@ -39,7 +40,7 @@ export const LEVERS: Lever[] = [
   {
     key: "media",
     id: "02",
-    name: "Media",
+    name: "Vibe Media",
     what: "Content that keeps being consumed after you publish.",
     symptom: "Your best thinking reaches the same room it reached last year.",
     cure: "Publish once, be heard at the scale of the whole internet.",
@@ -54,7 +55,7 @@ export const LEVERS: Lever[] = [
   {
     key: "capital",
     id: "03",
-    name: "Capital",
+    name: "Vibe Capital",
     what: "Money that buys output. Equity, MRR, investment.",
     symptom: "Every dollar dies the moment you stop trading hours to earn it.",
     cure: "Money that compounds while you sleep, not only while you work.",
@@ -69,7 +70,7 @@ export const LEVERS: Lever[] = [
   {
     key: "labor",
     id: "04",
-    name: "Labor",
+    name: "Vibe Labor",
     what: "Other people's effort. The oldest, weakest, least scalable lever.",
     symptom: "You are the bottleneck on every task only you know how to do.",
     cure: "A team that turns one pair of hands into many.",
@@ -194,7 +195,7 @@ export function profile(scores: Scores): { label: string; blurb: string } {
 /**
  * Build a ready-to-paste prompt that turns a leverage diagnosis into a plan.
  * Works in Claude Code (scaffolds files) or claude.ai (markdown). Sets Claude
- * up to act as Archimedes, a leverage coach focused on the binding constraint.
+ * up to act as the Vibe Leverage coach focused on the binding constraint.
  */
 export function buildClaudePrompt(scores: Scores): string {
   const key = bindingConstraint(scores);
@@ -206,7 +207,7 @@ export function buildClaudePrompt(scores: Scores): string {
     .map((p, i) => `${i + 1}. [${p.horizon}] ${p.action} (proof: ${p.proof})`)
     .join("\n");
 
-  return `You are Archimedes, a leverage coach. You think in exactly four forms of leverage: code, media, capital, and labor (Naval Ravikant's framing, with AI fluency folding into code). The slowest lever gates the whole system, so you attack the binding constraint, not everything at once.
+  return `You are the Vibe Leverage coach. You think in exactly four forms of leverage: Vibe Code, Vibe Media, Vibe Capital, and Vibe Labor (Naval Ravikant's framing, with AI fluency folding into code). The slowest lever gates the whole system, so you attack the binding constraint, not everything at once.
 
 Here is my current leverage diagnosis, each scored 0 to 100:
 
@@ -242,7 +243,7 @@ About me (I will fill this in): [your situation, skills, audience, current proje
 }
 
 /** localStorage key the diagnostic and the chat both read scores from. */
-export const SCORES_STORAGE_KEY = "archimedes:scores:v1";
+export const SCORES_STORAGE_KEY = STORAGE_KEYS.scores;
 
 export function isScores(value: unknown): value is Scores {
   if (!value || typeof value !== "object") return false;
@@ -252,9 +253,9 @@ export function isScores(value: unknown): value is Scores {
   );
 }
 
-/** System prompt for the Archimedes chat agent, grounded in the person's diagnosis. */
+/** System prompt for the Vibe Coach, grounded in the person's diagnosis. */
 export function buildSystemPrompt(scores: Scores | null): string {
-  const base = `You are Archimedes, a sharp and warm leverage coach. You think in exactly four forms of leverage: code, media, capital, and labor (Naval Ravikant's framing, with AI fluency folding into code). The slowest lever gates the whole system, so you push the person's binding constraint rather than spreading effort across all four.
+  const base = `You are Vibe Coach, the sharp and warm coach inside Vibe Leverage. You think in exactly four forms of leverage: Vibe Code, Vibe Media, Vibe Capital, and Vibe Labor (Naval Ravikant's framing, with AI fluency folding into code). The slowest lever gates the whole system, so you push the person's binding constraint rather than spreading effort across all four.
 
 Coaching style: concrete and named, never abstract. Prescribe the next real action, not a framework or a course. Keep replies short, a few sentences or a tight list. Ask at most one sharp question, and only when the answer would change your advice. Do not use em dashes or en dashes in your writing.`;
 
@@ -356,8 +357,8 @@ export function nextPlay(scores: Scores, completed: Set<string>): NextPlay | nul
 
 // ─────────────────────── the maxxing tracker ───────────────────────
 
-export const COMPLETED_PLAYS_KEY = "archimedes:plays:v1";
-export const HISTORY_KEY = "archimedes:history:v1";
+export const COMPLETED_PLAYS_KEY = STORAGE_KEYS.completedPlays;
+export const HISTORY_KEY = STORAGE_KEYS.history;
 
 export interface Snapshot {
   t: number;

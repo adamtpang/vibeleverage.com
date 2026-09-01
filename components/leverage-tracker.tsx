@@ -5,7 +5,7 @@ import { Check, Plus } from "lucide-react";
 
 import { CURES, nextPlay } from "@/lib/levers";
 import { useLeverage } from "@/components/leverage-store";
-import { FulcrumGlyph } from "@/components/lever-mark";
+import { VibeGlyph } from "@/components/lever-mark";
 
 function Sparkline({ values }: { values: number[] }) {
   const n = values.length;
@@ -148,7 +148,7 @@ export function LeverageTracker() {
         <p className="label text-[0.6rem] text-muted-foreground">Your next play</p>
         {!diagnosis.complete ? (
           <div className="flex flex-1 flex-col justify-center gap-3">
-            <FulcrumGlyph className="text-lever" />
+            <VibeGlyph className="text-lever" />
             <p className="text-sm leading-relaxed text-foreground">
               Complete the evidence audit before starting a cure cycle. A tracker
               without a verified baseline only records self-confidence.
@@ -180,7 +180,7 @@ export function LeverageTracker() {
           </>
         ) : (
           <div className="flex flex-1 flex-col justify-center gap-3">
-            <FulcrumGlyph className="text-lever" />
+            <VibeGlyph className="text-lever" />
             <p className="text-sm leading-relaxed text-foreground">
               You have cleared every play for {constraintName}. Re-rate your
               levers above. When {constraintName} is no longer your lowest, your

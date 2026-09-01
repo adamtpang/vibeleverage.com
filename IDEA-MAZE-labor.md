@@ -1,6 +1,6 @@
 # Idea maze: labor leverage
 
-One sentence: mapping the real branches for Fulcrum Labor, including the option that the highest-leverage version of this isn't a product at all.
+One sentence: mapping the real branches for Vibe Labor, including the option that the highest-leverage version of this isn't a product at all.
 
 ## Entry point
 Is the labor being leveraged real humans you hire and manage, or AI agents standing in for a labor role, and does the automation ever touch the actual hire/fire decision.
@@ -10,13 +10,13 @@ Is the labor being leveraged real humans you hire and manage, or AI agents stand
 ### Branch: multi-agent orchestration infrastructure
 - **What it is:** the plumbing layer for running fleets of agents. LangGraph (largest production footprint in 2026), CrewAI (role-based, easiest to prototype), Microsoft AutoGen (conversational, research-heavy).
 - **Status:** 🏙️ Crowded infra layer
-- **Evidence:** all three are mature, funded, widely adopted. Not a product to compete with, this is what any Fulcrum Labor build would sit on top of, not next to.
+- **Evidence:** all three are mature, funded, widely adopted. Not a product to compete with, this is what any Vibe Labor build would sit on top of, not next to.
 - **Distance from other branches:** foundational layer underneath every other branch on this maze, not a destination itself.
 
 ### Branch: "AI employee" full-function platforms
 - **What it is:** sell a complete autonomous digital worker for a specific job function. Lindy.ai ($54M raised, 5,000+ customers), 11x.ai ("Alice," $75M+ raised), Artisan AI ("Ava," notable for an explicit autonomy dial with escalation rules and an audit trail).
 - **Status:** 🏙️ Crowded but viable
-- **Evidence:** real funding, real customers, this is the category Manus AI broke out of before its ~$2-3B Meta acquisition in December 2025. A Fulcrum Labor built as "another AI SDR/employee" would be entering an already-funded, already-competitive field with no structural edge.
+- **Evidence:** real funding, real customers, this is the category Manus AI broke out of before its ~$2-3B Meta acquisition in December 2025. A Vibe Labor built as "another AI SDR/employee" would be entering an already-funded, already-competitive field with no structural edge.
 - **Distance from other branches:** the natural-sounding destination that turns out to be the most contested one.
 
 ### Branch: AI-assisted human hiring tools
@@ -38,6 +38,6 @@ Is the labor being leveraged real humans you hire and manage, or AI agents stand
 - **Distance from other branches:** structurally different from every other branch, it's not a market to enter, it's a capability to use more.
 
 ## The live path
-Not a new SaaS product. The "AI employee" branch is already funded and crowded (Lindy, 11x, Manus-scale exits), and building into it adds a new front with no edge, directly against the workspace's own "concentration over spread" rule. The actual open branch is using the personal agent fleet harder and more deliberately, the same move already made on this research task, applied to more of the backlog instead of built into a product nobody asked Fulcrum Labor to be.
+Not a new SaaS product. The "AI employee" branch is already funded and crowded (Lindy, 11x, Manus-scale exits), and building into it adds a new front with no edge, directly against the workspace's own "concentration over spread" rule. The actual open branch is using the personal agent fleet harder and more deliberately, the same move already made on this research task, applied to more of the backlog instead of built into a product nobody asked Vibe Labor to be.
 
 Verification notes (2026-08-14): sourced via live search this session across LangGraph, CrewAI, AutoGen, Lindy, 11x, Artisan, Manus, and 2026 AI-employment-law reporting (Colorado AI Act, documented autonomous-hiring and AI-layoff cases).

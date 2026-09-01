@@ -10,7 +10,7 @@ import {
 } from "@/lib/levers";
 
 export const runtime = "edge";
-export const alt = "A leverage diagnosis card from archimedes.life";
+export const alt = "A leverage diagnosis card from vibeleverage.com";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -31,10 +31,10 @@ export default function CardImage({ params }: { params: { scores: string } }) {
   const constraint = LEVER_BY_KEY[bindingConstraint(scores)];
 
   const rows: Array<{ name: string; value: number }> = [
-    { name: "Code", value: scores.code },
-    { name: "Media", value: scores.media },
-    { name: "Capital", value: scores.capital },
-    { name: "Labor", value: scores.labor },
+    { name: "Vibe Code", value: scores.code },
+    { name: "Vibe Media", value: scores.media },
+    { name: "Vibe Capital", value: scores.capital },
+    { name: "Vibe Labor", value: scores.labor },
   ];
 
   return new ImageResponse(
@@ -155,7 +155,7 @@ export default function CardImage({ params }: { params: { scores: string } }) {
             Find the lever. Move the world.
           </div>
           <div style={{ display: "flex", color: GOLD, fontSize: 24, letterSpacing: 1 }}>
-            archimedes.life
+            vibeleverage.com
           </div>
         </div>
       </div>

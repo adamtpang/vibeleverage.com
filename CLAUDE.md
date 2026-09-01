@@ -1,4 +1,4 @@
-# CLAUDE.md - archimedes.life
+# CLAUDE.md - vibeleverage.com
 
 Context for Claude Code, Codex, and humans working in this folder.
 
@@ -12,10 +12,10 @@ as a starting point, then inspect the actual code and docs before making changes
 
 ## Detected project facts
 
-- Workspace folder: `archimedes.life`
+- Workspace folder: `vibeleverage.com`
 - Git repository: yes
 - `package.json`: yes
-- Detected stack: Next.js, React, Tailwind, TypeScript, package "archimedes.life"
+- Detected stack: Next.js, React, Tailwind, TypeScript, package "vibeleverage.com"
 - Existing context-like files: README.md, readme.md
 - Notable top-level files: .env.example, .eslintrc.json, .gitignore, components.json, next-env.d.ts, next.config.mjs, package-lock.json, package.json, postcss.config.mjs, README.md, tailwind.config.ts, tsconfig.json
 
@@ -29,8 +29,10 @@ as a starting point, then inspect the actual code and docs before making changes
 
 ## Current product state
 
+- The product brand and canonical domain are Vibe Leverage and
+  `https://vibeleverage.com`.
 - The homepage contains an evidence-based 16-check leverage audit covering
-  Code, Media, Capital, and Labor.
+  Vibe Code, Vibe Media, Vibe Capital, and Vibe Labor.
 - The rubric is versioned in `lib/leverage-diagnostic.ts`. Unknown checks reduce
   confidence, all four scores stay independent, and a verified 100 requires
   complete frontier evidence.
@@ -40,17 +42,22 @@ as a starting point, then inspect the actual code and docs before making changes
   acceptance receipt. Comparable audit receipts are kept in localStorage.
 - The email capture posts consenting signups through FormSubmit. A proper email
   service provider is still needed before operating a recurring or larger list.
-- The current personal baseline is stored only in the gitignored `.archimedes`
+- The current personal baseline is stored only in the gitignored `.vibeleverage`
   directory. Do not publish private diagnosis artifacts.
 - Validation commands are `npm test`, `npx tsc --noEmit`, and `npm run build`.
 - Local UI verification uses Helium Harness against `http://localhost:3010`.
+- The former `archimedes.life` host migrates non-secret browser evidence through
+  `/migrate` and then redirects to the canonical domain. Never remove the legacy
+  storage keys or former-host migration without an explicit data-retirement plan.
+- The execution surfaces and local job code live under `app/vibe`, `app/api/vibe`,
+  `components/vibe`, and `lib/vibe`.
 
 ## Imported existing context
 
 Source: `README.md`
 
 ```markdown
-# archimedes.life
+# vibeleverage.com
 
 The leverage diagnosis. Find and cure the four levers you're under-using:
 **code, media, capital, labor**. Rate yourself on each, find your binding
@@ -84,7 +91,7 @@ validates and acknowledges in the browser but does **not** persist anywhere yet.
 Wire it up by setting `FORMSPREE_ENDPOINT` to a real endpoint (e.g. a
 [Formspree](https://formspree.io) form ID). Search the file for `TODO(launch)`.
 
-## Chat with Archimedes (AI agent)
+## Vibe Coach
 
 The `/#chat` section streams from Claude Sonnet 4.6 via a serverless route at
 [`app/api/chat/route.ts`](app/api/chat/route.ts). It needs an Anthropic API key,

@@ -1,0 +1,34 @@
+# repos.yaml v0: see github.com/adamtpang/repo-connect
+repo: vibeleverage.com
+is: Diagnose and maxx Vibe Code, Vibe Media, Vibe Capital, and Vibe Labor. The audit finds the binding constraint, then Vibe agents in lib/vibe help execute the cure.
+
+provides:
+  - id: vibe-media
+    what: Local, subscription-powered agent that transcribes, proposes cuts, and packages a podcast episode (title/description/chapters), reviewed before anything is cut or published
+    at: lib/vibe/media-jobs.ts
+
+stack: [nextjs, typescript, anthropic-sdk]
+
+kin:
+  - repo: waterfall.sh
+    why: Two real reasons. (1) The Vibe agents (lib/vibe/) run their LLM steps through the local `claude` CLI, spending Adam's actual Claude Code/Pro subscription quota, not a metered API key. waterfall.sh exists specifically to make that quota last (its own README, "Built to make a Claude Code / Claude Pro plan's quota last the full day instead of the first hour"). Vibe's routine mechanical sub-steps are exactly the kind of task waterfall.sh's router is meant to intercept before they hit the Claude quota. (2) waterfall.sh's watertop desktop app already solved the "spin up an agent as easily as a CLI" form-factor question Vibe Media/Capital/Labor is currently facing: its `desktop/server.py` implements a working detect-and-launch pattern for Claude Code, Codex, Grok Build, and OpenCode (`detect_agents()`/`launch_agent()`), and `DESKTOP_GUI_LANDSCAPE.md` documents the "glass over CLI" architecture (native shell, don't reimplement the agent loop, launch/embed the real CLI instead) that the wider OSS coding-agent-desktop market (OpenChamber, AionUi, CC Switch, opcode) has converged on. Vibe's own agents should learn from and reuse this pattern rather than staying bespoke Next.js job-runner pages.
+  - repo: pangaea.blog
+    why: The vibe-media agent here (lib/vibe/media-jobs.ts) transcribes, proposes cuts, and packages the Time Capsule podcast episodes that pangaea.blog's /podcast lane is meant to host (see that repo's own CLAUDE.md: "/podcast is the spoken side, YouTube-hosted episodes"). This is Vibe Media put into practice as pangaea.blog's actual production tool, not just a diagnosis. Corrected 2026-08-13: pangaea.blog's repos.yaml previously pointed this relationship at a placeholder repo name, "podcast-pipeline", that was never a real folder.
+
+exchanges:
+  - id: route-vibe-job
+    with: waterfall.sh
+    trigger: manual
+    asks: inspect a Vibe job shape and identify which steps should avoid scarce model quota
+    returns: model routing plan with fallback and quota risks
+    permission: read-only
+    approval: human-required
+    at: lib/vibe/media-jobs.ts
+  - id: request-podcast-contract
+    with: pangaea.blog
+    trigger: contract-drift
+    asks: inspect the podcast publishing contract expected by the hub
+    returns: compatible episode package schema and ingestion notes
+    permission: read-only
+    approval: human-required
+    at: lib/vibe/media-jobs.ts

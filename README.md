@@ -1,14 +1,15 @@
-# archimedes.life
+# vibeleverage.com
 
-The leverage diagnosis. Find and cure the four levers you're under-using:
-**code, media, capital, labor**. Audit factual evidence, find the binding
-constraint, and get one measurable improvement cycle.
+Diagnose and maxx **Vibe Code, Vibe Media, Vibe Capital, and Vibe Labor**.
+Audit factual evidence, find the binding constraint, run one cure, and rescan
+only after users, audience, revenue, or delegated output moves.
 
 > "Give me a lever long enough and a place to stand, and I will move the world."
 > Archimedes
 
-A single static page. Dark, high-contrast, one accent. No database, no auth, no
-API routes.
+The public product is a dark, high-contrast Next.js experience with one accent.
+It has no database or auth. The diagnostic stays in localStorage, the Vibe Coach
+streams through one Anthropic route, and the `/vibe/*` agent tools are local-first.
 
 ## Stack
 
@@ -43,7 +44,7 @@ post consenting signups through FormSubmit. The first live submission may
 require a one-time activation from the destination inbox. Move to a proper
 email service provider before operating a recurring or larger list.
 
-## Chat with Archimedes (AI agent)
+## Vibe Coach
 
 The `/#chat` section streams from Claude Sonnet 4.6 via a serverless route at
 [`app/api/chat/route.ts`](app/api/chat/route.ts). It needs an Anthropic API key,
@@ -59,8 +60,20 @@ visitors can paste their own Anthropic key, which stays in their browser
 precedence as soon as it exists. The route applies a light in-memory rate
 limit; swap in Vercel KV or Upstash for real enforcement.
 
+## Vibe agents
+
+`/vibe/code`, `/vibe/media`, `/vibe/capital`, and `/vibe/labor` are local-first
+execution surfaces backed by `lib/vibe`. Their APIs shell out to local tools and
+are not expected to execute successfully in Vercel's serverless filesystem.
+
+## Former domain
+
+`archimedes.life` is the former name. Requests pass through `/migrate` once so
+browser-local diagnostic evidence can move to `vibeleverage.com`, then continue
+to the same path. Saved Anthropic keys are intentionally never transferred.
+
 ## Deploy
 
 Hosted on [Vercel](https://vercel.com). Pushes to the default branch deploy
 automatically; `vercel --prod` ships from the CLI. The chat route is the only
-non-static part; everything else is prerendered.
+public serverless feature; the local Vibe agents also expose API routes.

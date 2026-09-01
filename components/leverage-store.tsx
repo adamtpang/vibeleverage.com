@@ -14,8 +14,9 @@ import {
   type Scores,
   type Snapshot,
 } from "@/lib/levers";
+import { readStoredValue, STORAGE_KEYS } from "@/lib/storage-keys";
 
-const ANSWERS_STORAGE_KEY = "archimedes:evidence:v2";
+const ANSWERS_STORAGE_KEY = STORAGE_KEYS.answers;
 
 interface LeverageValue {
   loaded: boolean;
@@ -51,21 +52,21 @@ export function LeverageProvider({ children }: { children: React.ReactNode }) {
 
   React.useEffect(() => {
     try {
-      const rawAnswers = localStorage.getItem(ANSWERS_STORAGE_KEY);
+      const rawAnswers = readStoredValue("answers");
       if (rawAnswers) {
         const parsed = JSON.parse(rawAnswers) as unknown;
         if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
           setAnswers(parsed as DiagnosticAnswers);
         }
       }
-      const rawPlays = localStorage.getItem(COMPLETED_PLAYS_KEY);
+      const rawPlays = readStoredValue("completedPlays");
       if (rawPlays) {
         const arr = JSON.parse(rawPlays) as unknown;
         if (Array.isArray(arr)) {
           setCompleted(new Set(arr.filter((x): x is string => typeof x === "string")));
         }
       }
-      const rawHist = localStorage.getItem(HISTORY_KEY);
+      const rawHist = readStoredValue("history");
       if (rawHist) {
         const arr = JSON.parse(rawHist) as unknown;
         if (Array.isArray(arr)) setHistory(arr as Snapshot[]);

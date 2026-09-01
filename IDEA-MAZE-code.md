@@ -1,6 +1,6 @@
 # Idea maze: code leverage
 
-One sentence: mapping the real branches for using code as personal leverage, given the explicit decision this session not to build a Fulcrum Code agent, since Claude Code already covers that lever.
+One sentence: mapping the real branches for using code as personal leverage, given the explicit decision this session not to build a Vibe Code agent, since Claude Code already covers that lever.
 
 ## Entry point
 Are you building the software by hand, directing an AI agent to build it, or avoiding code entirely, and is code the product itself or the leverage underneath a non-code business.
@@ -52,4 +52,4 @@ Are you building the software by hand, directing an AI agent to build it, or avo
 ## The live path
 AI-agent-directed build, on top of a fork-and-customize starting point when a new repo is needed. It's already proven, already the fastest branch available, and the standalone-agent branch was checked and correctly ruled out, no reason to walk back into it.
 
-Verification notes (2026-08-14): Devin vs Claude Code benchmark and adoption figures and the GPT-wrapper dead-end pattern sourced via live search this session (see chat, Fulcrum labor/media/capital research agents). No new evidence contradicts the code-agent retirement decision.
+Verification notes (2026-08-14): Devin vs Claude Code benchmark and adoption figures and the GPT-wrapper dead-end pattern sourced via live search this session (see chat, Vibe labor/media/capital research agents). No new evidence contradicts the code-agent retirement decision.

@@ -66,7 +66,7 @@ test("permissionless levers are sequenced before capital and labor", () => {
 
 test("the improvement prompt attacks one check and carries receipt guardrails", () => {
   const diagnosis = diagnoseLeverage(allAnswers("0"), "2026-08-28T00:00:00.000Z");
-  const prompt = buildImprovementPrompt(diagnosis, "archimedes.life");
+  const prompt = buildImprovementPrompt(diagnosis, "vibeleverage.com");
   const work = prompt.split("PRIORITIZED WORK\n")[1].split("\n\nWORKING RULES")[0];
 
   assert.match(prompt, /Run: leverage-2026-08-28/);

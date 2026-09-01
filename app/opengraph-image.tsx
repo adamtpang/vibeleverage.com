@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
 export const alt =
-  "archimedes: the leverage diagnosis. You don't have an effort problem. You have a leverage problem.";
+  "Vibe Leverage: diagnose your leverage, cure the weakest lane, and maxx what compounds.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -43,20 +43,20 @@ export default function OpengraphImage() {
               borderBottom: `22px solid ${GOLD}`,
             }}
           />
-          THE LEVERAGE CLINIC
+          THE LEVERAGE MAXXING SYSTEM
         </div>
 
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div
             style={{
-              fontSize: 150,
+              fontSize: 128,
               fontWeight: 700,
               color: "#f2ead9",
-              letterSpacing: -6,
+              letterSpacing: 0,
               lineHeight: 1,
             }}
           >
-            archimedes
+            vibe leverage
           </div>
           <div
             style={{
@@ -67,7 +67,7 @@ export default function OpengraphImage() {
               display: "flex",
             }}
           >
-            You don&apos;t have an effort problem. You have a leverage problem.
+            Diagnose your leverage. Cure the weakest lane. Maxx what compounds.
           </div>
         </div>
 
@@ -101,7 +101,7 @@ export default function OpengraphImage() {
             />
           </div>
           <div style={{ color: MUTED, fontSize: 28, letterSpacing: 2 }}>
-            archimedes.life
+            vibeleverage.com
           </div>
         </div>
       </div>

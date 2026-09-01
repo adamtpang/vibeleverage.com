@@ -4,14 +4,14 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Privacy",
   description:
-    "What archimedes.life collects, what stays in your browser, and what leaves it.",
+    "What vibeleverage.com collects, what stays in your browser, and what leaves it.",
 };
 
 export default function PrivacyPage() {
   return (
     <main className="mx-auto max-w-2xl px-6 py-24 sm:px-8">
       <p className="font-mono text-xs uppercase tracking-[0.24em] text-muted-foreground">
-        archimedes.life
+        vibeleverage.com
       </p>
       <h1 className="mt-4 text-3xl font-semibold tracking-tight">Privacy</h1>
       <p className="mt-2 text-sm text-muted-foreground">
@@ -28,6 +28,8 @@ export default function PrivacyPage() {
             completed plays, and any API key you paste into the chat live in
             your browser&rsquo;s localStorage. They are not sent to our servers,
             and we cannot see them. Clearing your browser storage deletes them.
+            A one-time domain migration can transfer this evidence, but never
+            your API key, from archimedes.life to vibeleverage.com.
           </p>
         </section>
 

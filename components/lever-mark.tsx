@@ -107,7 +107,7 @@ export function LeverMark({ className }: { className?: string }) {
 }
 
 /** Small fulcrum triangle, reused as a marker throughout the page. */
-export function FulcrumGlyph({ className }: { className?: string }) {
+export function VibeGlyph({ className }: { className?: string }) {
   return (
     <svg
       viewBox="0 0 18 15"

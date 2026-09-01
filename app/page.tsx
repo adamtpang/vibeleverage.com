@@ -1,13 +1,13 @@
 import { ArrowDown, ArrowRight } from "lucide-react";
 
-import { ArchimedesChat } from "@/components/archimedes-chat";
+import { VibeCoach } from "@/components/vibe-coach";
 import { CureProtocol } from "@/components/cure-protocol";
 import { Diagnostic } from "@/components/diagnostic";
 import { EmailCapture } from "@/components/email-capture";
 import { LeverageBenchmarks } from "@/components/leverage-benchmarks";
 import { LeverageProvider } from "@/components/leverage-store";
 import { LeverageTracker } from "@/components/leverage-tracker";
-import { FulcrumGlyph, LeverMark } from "@/components/lever-mark";
+import { LeverMark, VibeGlyph } from "@/components/lever-mark";
 import { Button } from "@/components/ui/button";
 import { LEVERS } from "@/lib/levers";
 
@@ -32,7 +32,7 @@ const ARC = [
 const CURE_SECTION = {
   label: "The cure",
   title: "Every lever has a protocol, and the clinic hands you the one for your constraint.",
-  body: "Code, media, capital, and labor each come with a cure protocol: the strategic read on why that lever is stuck, then the ranked moves that pull it, most actionable first. No frameworks, no course. The next real action for the exact lever holding you back.",
+  body: "Vibe Code, Vibe Media, Vibe Capital, and Vibe Labor each come with a cure protocol: the strategic read on why that lever is stuck, then the ranked moves that pull it, most actionable first. No frameworks, no course. The next real action for the exact lever holding you back.",
 };
 
 const MAXX_SECTION = {
@@ -66,50 +66,49 @@ export default function Page() {
         className="pointer-events-none fixed inset-0 -z-10 overflow-hidden"
       >
         <div className="absolute inset-0 bg-grid opacity-[0.04]" />
-        <div className="absolute left-1/2 top-[-18rem] h-[34rem] w-[34rem] -translate-x-1/2 rounded-full bg-lever/[0.08] blur-[140px]" />
       </div>
 
       {/* ───────────────────────── hero ───────────────────────── */}
-      <section className="mx-auto flex min-h-[88svh] max-w-5xl flex-col justify-center px-6 pb-20 pt-28 sm:px-8">
+      <section className="mx-auto flex min-h-[88svh] max-w-5xl flex-col justify-center px-6 pb-14 pt-20 sm:px-8 sm:pb-20 sm:pt-28">
         <p
-          className="reveal mb-8 flex items-center gap-2.5 font-mono text-xs uppercase tracking-[0.26em] text-muted-foreground"
+          className="reveal mb-6 flex items-center gap-2.5 font-mono text-xs uppercase tracking-[0.26em] text-muted-foreground sm:mb-8"
           style={{ animationDelay: "0ms" }}
         >
-          <FulcrumGlyph className="text-lever" />
-          The leverage clinic
+          <VibeGlyph className="text-lever" />
+          The leverage maxxing system
         </p>
 
         <h1
-          className="reveal font-sans text-[clamp(2.75rem,14vw,9.5rem)] font-bold leading-[0.82] tracking-[-0.04em]"
+          className="reveal font-sans text-[clamp(3rem,13vw,8rem)] font-bold leading-[0.84] tracking-normal"
           style={{ animationDelay: "80ms" }}
         >
-          archimedes
+          <span className="block">vibe</span>
+          <span className="block text-lever">leverage</span>
         </h1>
 
         <p
-          className="reveal mt-9 max-w-2xl text-balance text-2xl font-medium leading-[1.15] sm:text-3xl"
+          className="reveal mt-7 max-w-2xl text-balance text-2xl font-medium leading-[1.15] sm:mt-9 sm:text-3xl"
           style={{ animationDelay: "170ms" }}
         >
-          You don&rsquo;t have an effort problem. You have a{" "}
-          <span className="text-lever">leverage</span> problem.
+          Diagnose your leverage. Cure the weakest lane. Maxx what compounds.
         </p>
 
         <p
           className="reveal mt-5 max-w-xl text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg"
           style={{ animationDelay: "250ms" }}
         >
-          Diagnose the four levers you&rsquo;re under-using (code, media, capital,
-          labor), get the cure for the one holding you back, and compound it until
-          the whole system moves.
+          Score Vibe Code, Vibe Media, Vibe Capital, and Vibe Labor from real
+          evidence. Then work one constraint until users, audience, revenue, or
+          delegated output moves.
         </p>
 
         <div
-          className="reveal mt-10 flex flex-wrap items-center gap-3"
+          className="reveal mt-7 flex flex-wrap items-center gap-3 sm:mt-10"
           style={{ animationDelay: "330ms" }}
         >
           <Button asChild className="h-12 gap-2 px-6 text-base font-semibold">
             <a href="#diagnostic">
-              Run your diagnosis
+              Diagnose my leverage
               <ArrowDown className="h-4 w-4" />
             </a>
           </Button>
@@ -135,6 +134,23 @@ export default function Page() {
             <a href="#levers">See the four levers</a>
           </Button>
         </div>
+
+        <div
+          id="cure-log"
+          className="reveal mt-7 w-full max-w-xl scroll-mt-6 sm:mt-8"
+          style={{ animationDelay: "410ms" }}
+        >
+          <p className="mb-2.5 font-mono text-[0.65rem] uppercase tracking-[0.2em] text-muted-foreground">
+            One practical leverage cure each week
+          </p>
+          <EmailCapture
+            buttonLabel="Join the cure log"
+            helperText="Consent to receive one practical leverage email each week. No spam."
+            source="hero-cure-log"
+            subject="vibeleverage.com cure log signup"
+            successMessage="You're on the cure log. The first field note will arrive by email."
+          />
+        </div>
       </section>
 
       {/* ──────────────────── epigraph + the motif ──────────────────── */}
@@ -156,7 +172,7 @@ export default function Page() {
         <div className="flex flex-col gap-5">
           <SectionLabel index="I">The four levers</SectionLabel>
           <h2 className="max-w-2xl text-balance text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
-            Four ways to multiply a life. Most people pull one.
+            Four lanes of leverage. Pull the weakest one first.
           </h2>
         </div>
 
@@ -171,7 +187,7 @@ export default function Page() {
                 <span className="font-mono text-xs tracking-[0.2em] text-muted-foreground transition-colors duration-300 group-hover:text-lever">
                   {lever.id}
                 </span>
-                <FulcrumGlyph className="text-border transition-colors duration-300 group-hover:text-lever" />
+                <VibeGlyph className="text-border transition-colors duration-300 group-hover:text-lever" />
               </div>
 
               <div>
@@ -236,9 +252,9 @@ export default function Page() {
               Audit your four levers. Find the one gating the rest.
             </h2>
             <p className="max-w-xl text-pretty text-base leading-relaxed text-muted-foreground">
-              Every point needs a factual range. Code and Media come first because
-              they are permissionless. Diagnose the weaker one, then pour your
-              effort there until the evidence changes.
+              Every point needs a factual range. Vibe Code and Vibe Media come
+              first because they are permissionless. Diagnose the weaker one,
+              then pour your effort there until the evidence changes.
             </p>
           </div>
 
@@ -314,21 +330,21 @@ export default function Page() {
         </section>
       </LeverageProvider>
 
-      {/* ───────────────────── V · talk to archimedes ───────────────────── */}
+      {/* ───────────────────── VI · talk to Vibe Coach ───────────────────── */}
       <section id="chat" className="mx-auto max-w-5xl px-6 py-24 sm:px-8 sm:py-32">
         <div className="flex flex-col gap-5">
-          <SectionLabel index="VI">Talk to Archimedes</SectionLabel>
+          <SectionLabel index="VI">Talk to Vibe Coach</SectionLabel>
           <h2 className="max-w-2xl text-balance text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
             Coach the constraint in real time.
           </h2>
           <p className="max-w-xl text-pretty text-base leading-relaxed text-muted-foreground">
-            Archimedes reads your current scores and helps you attack your binding
+            Vibe Coach reads your current scores and helps you attack your binding
             constraint. Ask for a plan, a first step, or a gut check.
           </p>
         </div>
 
         <div className="mt-12 sm:mt-16">
-          <ArchimedesChat />
+          <VibeCoach />
         </div>
       </section>
 
@@ -344,7 +360,7 @@ export default function Page() {
           </h2>
           <p className="text-pretty text-base leading-relaxed text-muted-foreground">
             One practical dispatch each week: the constraint, the action, the
-            receipt, and the score change. Watch Archimedes go from diagnosis to
+            receipt, and the score change. Watch Vibe Leverage turn diagnosis into
             compounding evidence.
           </p>
           <div className="mt-2 w-full max-w-md text-left">
@@ -352,7 +368,7 @@ export default function Page() {
               buttonLabel="Join the cure log"
               helperText="Consent to receive one practical leverage email each week. No spam."
               source="clinic-cure-log"
-              subject="archimedes.life cure log signup"
+              subject="vibeleverage.com cure log signup"
               successMessage="You're on the cure log. The first field note will arrive by email."
             />
           </div>
@@ -363,8 +379,8 @@ export default function Page() {
       <footer className="border-t border-border">
         <div className="mx-auto flex max-w-5xl flex-col gap-6 px-6 py-12 sm:flex-row sm:items-center sm:justify-between sm:px-8">
           <div className="flex items-center gap-2.5">
-            <FulcrumGlyph className="text-lever" />
-            <span className="font-mono text-sm tracking-wide">archimedes.life</span>
+            <VibeGlyph className="text-lever" />
+            <span className="font-mono text-sm tracking-wide">vibeleverage.com</span>
           </div>
           <p className="text-sm text-muted-foreground">
             Find the lever. Move the world.

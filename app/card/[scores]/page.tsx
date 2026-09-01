@@ -12,7 +12,7 @@ import {
   profile,
 } from "@/lib/levers";
 import { Button } from "@/components/ui/button";
-import { FulcrumGlyph } from "@/components/lever-mark";
+import { VibeGlyph } from "@/components/lever-mark";
 import { cn } from "@/lib/utils";
 
 interface Props {
@@ -27,7 +27,7 @@ export function generateMetadata({ params }: Props): Metadata {
   const prof = profile(scores);
   const constraint = LEVER_BY_KEY[bindingConstraint(scores)];
   const title = `Leverage index ${index}/100 · ${prof.label}`;
-  const description = `Code ${scores.code}, media ${scores.media}, capital ${scores.capital}, labor ${scores.labor}. Binding constraint: ${constraint.name}. Get your own number at archimedes.life.`;
+  const description = `Vibe Code ${scores.code}, Vibe Media ${scores.media}, Vibe Capital ${scores.capital}, Vibe Labor ${scores.labor}. Binding constraint: ${constraint.name}. Get your own number at vibeleverage.com.`;
 
   return {
     title,
@@ -60,11 +60,10 @@ export default function CardPage({ params }: Props) {
     <main className="relative mx-auto flex min-h-[100svh] max-w-3xl flex-col justify-center px-6 py-20 sm:px-8">
       <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
         <div className="absolute inset-0 bg-grid opacity-[0.04]" />
-        <div className="absolute left-1/2 top-[-18rem] h-[34rem] w-[34rem] -translate-x-1/2 rounded-full bg-lever/[0.08] blur-[140px]" />
       </div>
 
       <p className="flex items-center gap-2.5 font-mono text-xs uppercase tracking-[0.26em] text-muted-foreground">
-        <FulcrumGlyph className="text-lever" />
+        <VibeGlyph className="text-lever" />
         The leverage diagnosis
       </p>
 
@@ -140,11 +139,17 @@ export default function CardPage({ params }: Props) {
         <p className="text-sm text-muted-foreground">
           Four levers, two minutes, free.
         </p>
+        <a
+          href="/#cure-log"
+          className="text-sm font-medium text-lever underline-offset-4 hover:underline"
+        >
+          Follow the cure log
+        </a>
       </div>
 
       <p className="mt-14 font-mono text-xs text-muted-foreground">
         <a href="/" className="underline-offset-4 hover:underline">
-          archimedes.life
+          vibeleverage.com
         </a>{" "}
         · find the lever, move the world
       </p>

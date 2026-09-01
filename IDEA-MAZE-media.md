@@ -1,6 +1,6 @@
 # Idea maze: media leverage
 
-One sentence: mapping the real branches for Fulcrum Media, the AI agent for the media lever, before extending it past what's already proven this season.
+One sentence: mapping the real branches for Vibe Media, the AI agent for the media lever, before extending it past what's already proven this season.
 
 ## Entry point
 Do you produce content yourself with AI assistance and publish under your own review, or deploy an agent that decides and publishes on its own, and does it use your real identity or a synthetic persona.
@@ -10,7 +10,7 @@ Do you produce content yourself with AI assistance and publish under your own re
 ### Branch: editing-assist tools
 - **What it is:** transcribe, cut, caption, score segments, human still presses publish. Descript (Underlord agent, now with an API), Riverside.fm (Magic Clips, Magic Episode).
 - **Status:** 🏙️ Crowded but viable
-- **Evidence:** mature, funded, real usage, $15-30/mo (Descript) to $24-79/mo (Riverside). Mechanistically close to Fulcrum Media's own transcribe-propose-package loop.
+- **Evidence:** mature, funded, real usage, $15-30/mo (Descript) to $24-79/mo (Riverside). Mechanistically close to Vibe Media's own transcribe-propose-package loop.
 - **Distance from other branches:** closest branch to what's already built, differs mainly in hosted vs. local/free.
 
 ### Branch: autonomous clip-and-schedule
