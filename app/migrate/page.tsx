@@ -54,7 +54,13 @@ export default function MigrationPage() {
 
         for (const key of TRANSFERABLE_KEYS) {
           const value = payload[key];
-          if (typeof value === "string") localStorage.setItem(STORAGE_KEYS[key], value);
+          if (typeof value === "string") {
+            const migratedValue =
+              key === "project" && value === "archimedes.life"
+                ? "vibeleverage.com"
+                : value;
+            localStorage.setItem(STORAGE_KEYS[key], migratedValue);
+          }
         }
       }
 

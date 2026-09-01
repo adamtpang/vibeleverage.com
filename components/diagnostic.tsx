@@ -46,7 +46,9 @@ export function Diagnostic() {
   React.useEffect(() => {
     try {
       const saved = readStoredValue("project");
-      if (saved) setProjectName(saved);
+      if (saved) {
+        setProjectName(saved === "archimedes.life" ? "vibeleverage.com" : saved);
+      }
     } catch {
       /* storage unavailable */
     } finally {
