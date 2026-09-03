@@ -67,7 +67,7 @@ own diagnosis says next time he runs it.
 | Lever | 08-10 | 08-13 est. | Why |
 |---|---|---|---|
 | Code | 35 | **62** | 46-repo index live on the real site with a verified commit. Vibe Code built and proven end to end, real branch, real merge, on disk. Vibe Media (also code) proven end to end. Desktop shell running. Approval-card upgrade proven with real partial-approval math. A large amount of shipped, deployed, verified software in one stretch. |
-| Media | 12 | **19** | Readiness jumped hard: a free local pipeline fully replaced Descript, 4 of 5 episodes are fully packaged. But the lever is defined by reach, not readiness, and reach is unchanged. Still 1 of 5 published. The 3 sent DMs got deleted per Adam's own correction. The Maanasa conversation has not happened. Capability up, output flat. |
+| Media | 12 | **19** | Readiness jumped hard: a free local pipeline fully replaced Descript, 4 of 5 episodes are fully packaged. But the lever is defined by reach, not readiness, and reach is unchanged. Still 1 of 5 published. Capability up, output flat. |
 | Capital | 4 | **5** | A Vibe Capital spec now exists. A spec is not leverage, per Adam's own standing rule (action over planning). Barely moves. |
 | Labor | 5 | **11** | Vibe Code and Vibe Media are themselves a working, proven instance of AI labor, real agents doing real work under direction, even though the Vibe Labor product itself (fleets, hiring) was never built. Credited honestly, not invented. |
 
