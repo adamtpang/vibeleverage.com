@@ -38,6 +38,8 @@ export function Diagnostic() {
     index,
   } = useLeverage();
   const [activeLever, setActiveLever] = React.useState<LeverKey>("code");
+  const resultRef = React.useRef<HTMLDivElement>(null);
+  const onLastLever = LEVERS.findIndex((lever) => lever.key === activeLever) === LEVERS.length - 1;
   const [projectName, setProjectName] = React.useState("vibeleverage.com");
   const [projectLoaded, setProjectLoaded] = React.useState(false);
   const [copied, setCopied] = React.useState(false);
@@ -102,6 +104,13 @@ export function Diagnostic() {
 
   function nextLever() {
     const current = LEVERS.findIndex((lever) => lever.key === activeLever);
+    if (current === LEVERS.length - 1) {
+      // The last lever leads to the result instead of looping back to the first.
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      resultRef.current?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+      resultRef.current?.focus({ preventScroll: true });
+      return;
+    }
     const next = LEVERS[(current + 1) % LEVERS.length];
     setActiveLever(next.key);
   }
@@ -185,12 +194,17 @@ export function Diagnostic() {
             onClick={nextLever}
             className="mt-2 inline-flex h-11 items-center justify-center gap-2 self-start rounded-md border border-lever/40 px-4 text-sm font-semibold text-lever transition-colors hover:bg-lever/10"
           >
-            Next lever
+            {onLastLever ? "See my diagnosis" : "Next lever"}
             <ArrowRight className="h-4 w-4" />
           </button>
         </div>
 
-        <div className="flex flex-col gap-6 border-t border-border bg-secondary/10 p-5 sm:p-8 lg:border-l lg:border-t-0">
+        <div
+          ref={resultRef}
+          tabIndex={-1}
+          aria-label="Your diagnosis"
+          className="flex scroll-mt-6 flex-col gap-6 border-t border-border bg-secondary/10 p-5 outline-none sm:p-8 lg:border-l lg:border-t-0"
+        >
           <div className="flex items-start justify-between gap-4">
             <div>
               <p className="label text-[0.6rem] text-muted-foreground">Profile</p>
