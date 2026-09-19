@@ -79,7 +79,7 @@ export default function Page() {
         </p>
 
         <h1
-          className="reveal font-sans text-[clamp(3rem,13vw,8rem)] font-bold leading-[0.84] tracking-normal"
+          className="reveal-rise font-sans text-[clamp(3rem,13vw,8rem)] font-bold leading-[0.84] tracking-normal"
           style={{ animationDelay: "80ms" }}
         >
           <span className="block">vibe</span>
@@ -87,7 +87,7 @@ export default function Page() {
         </h1>
 
         <p
-          className="reveal mt-7 max-w-2xl text-balance text-2xl font-medium leading-[1.15] sm:mt-9 sm:text-3xl"
+          className="reveal-rise mt-7 max-w-2xl text-balance text-2xl font-medium leading-[1.15] sm:mt-9 sm:text-3xl"
           style={{ animationDelay: "170ms" }}
         >
           Diagnose your leverage. Cure the weakest lane. Maxx what compounds.
@@ -194,7 +194,7 @@ export default function Page() {
                 <h3 className="text-2xl font-semibold tracking-tight sm:text-3xl">
                   {lever.name}
                 </h3>
-                <p className="mt-2 text-xs leading-relaxed text-muted-foreground/80">
+                <p className="mt-2 text-xs leading-relaxed text-subtle-foreground">
                   {lever.what}
                 </p>
               </div>
@@ -262,7 +262,7 @@ export default function Page() {
             <Diagnostic />
           </div>
 
-          <p className="mt-6 text-xs leading-relaxed text-muted-foreground/70">
+          <p className="mt-6 text-xs leading-relaxed text-subtle-foreground">
             Brand, network, and distribution are multipliers, not a fifth lever.
             They lower the cost of pulling all four.
           </p>

@@ -98,7 +98,7 @@ export function EmailCapture({
           }}
           aria-label="Email address"
           aria-invalid={status === "invalid"}
-          className="h-12 flex-1 border-border bg-secondary/40 text-base placeholder:text-muted-foreground/60 focus-visible:ring-lever"
+          className="h-12 flex-1 border-border bg-secondary/40 text-base placeholder:text-subtle-foreground focus-visible:ring-lever"
         />
         <Button
           type="submit"
@@ -115,7 +115,7 @@ export function EmailCapture({
         ) : status === "error" ? (
           <span className="text-destructive">Something went wrong. Try again.</span>
         ) : (
-          <span className="text-muted-foreground/70">
+          <span className="text-subtle-foreground">
             {helperText}
           </span>
         )}

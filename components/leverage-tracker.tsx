@@ -109,7 +109,7 @@ export function LeverageTracker() {
         {values.length >= 2 ? (
           <Sparkline values={values} />
         ) : (
-          <div className="flex h-14 items-center rounded-lg border border-dashed border-border px-4 text-xs text-muted-foreground/70">
+          <div className="flex h-14 items-center rounded-lg border border-dashed border-border px-4 text-xs text-subtle-foreground">
             Log two or more check-ins to draw your trend line.
           </div>
         )}
@@ -136,7 +136,7 @@ export function LeverageTracker() {
           <Plus className="h-4 w-4" strokeWidth={2.5} />
           Record evidence receipt
         </button>
-        <p className="text-xs leading-relaxed text-muted-foreground/70">
+        <p className="text-xs leading-relaxed text-subtle-foreground">
           {diagnosis.complete
             ? "Each receipt preserves the evidence bands and scores from that run. Re-audit only after the underlying facts change. Saved to this browser only."
             : `Complete all ${diagnosis.total} evidence checks before recording a receipt. ${diagnosis.answered} are answered now.`}
@@ -165,8 +165,8 @@ export function LeverageTracker() {
               </span>
             </div>
             <p className="text-sm leading-relaxed text-foreground">{np.action}</p>
-            <p className="text-xs leading-relaxed text-muted-foreground/80">
-              <span className="text-muted-foreground/60">Proof: </span>
+            <p className="text-xs leading-relaxed text-subtle-foreground">
+              <span className="text-subtle-foreground">Proof: </span>
               {np.proof}
             </p>
             <button

@@ -286,7 +286,7 @@ export function Diagnostic() {
             </div>
           </div>
 
-          <p className="text-xs leading-relaxed text-muted-foreground/70">
+          <p className="text-xs leading-relaxed text-subtle-foreground">
             Capital and labor remain visible, but Code and Media stay strategic
             until both reach repeatable traction. AI agents count as Code, not Labor.
           </p>
@@ -370,7 +370,7 @@ export function Diagnostic() {
           <summary className="cursor-pointer select-none font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-foreground">
             Preview prompt
           </summary>
-          <pre className="mt-3 max-h-96 overflow-auto whitespace-pre-wrap rounded-md border border-border bg-secondary/30 p-4 font-mono text-xs leading-relaxed text-muted-foreground/90">
+          <pre className="mt-3 max-h-96 overflow-auto whitespace-pre-wrap rounded-md border border-border bg-secondary/30 p-4 font-mono text-xs leading-relaxed text-muted-foreground">
             {prompt}
           </pre>
         </details>

@@ -114,8 +114,8 @@ export function CureProtocol() {
                       >
                         {play.action}
                       </span>
-                      <span className="text-xs leading-relaxed text-muted-foreground/80">
-                        <span className="text-muted-foreground/60">Proof: </span>
+                      <span className="text-xs leading-relaxed text-subtle-foreground">
+                        <span className="text-subtle-foreground">Proof: </span>
                         {play.proof}
                       </span>
                     </span>
@@ -140,7 +140,7 @@ export function CureProtocol() {
         </details>
 
         {selected === "capital" && (
-          <p className="mt-5 text-xs leading-relaxed text-muted-foreground/60">
+          <p className="mt-5 text-xs leading-relaxed text-subtle-foreground">
             Not financial advice. Specific products are examples, not
             recommendations. If you carry high-interest debt or have no cash
             buffer, attack income or debt first.

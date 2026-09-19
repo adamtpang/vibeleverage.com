@@ -89,7 +89,7 @@ export function LeverageBenchmarks() {
               </p>
               <p className="text-xs text-muted-foreground">{row.tag}</p>
               {row.note && (
-                <p className="mt-1 hidden text-xs leading-relaxed text-muted-foreground/70 md:block">
+                <p className="mt-1 hidden text-xs leading-relaxed text-subtle-foreground md:block">
                   {row.note}
                 </p>
               )}
@@ -107,7 +107,7 @@ export function LeverageBenchmarks() {
         ))}
       </ol>
 
-      <div className="flex flex-col gap-1.5 border-t border-border px-6 py-4 text-xs leading-relaxed text-muted-foreground/70 sm:px-8">
+      <div className="flex flex-col gap-1.5 border-t border-border px-6 py-4 text-xs leading-relaxed text-subtle-foreground sm:px-8">
         <p>
           Bars left to right: code, media, capital, labor. Anchor scores are
           editorial estimates on the same 0 to 100 scale, where 100 is the

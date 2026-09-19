@@ -199,7 +199,7 @@ export function VibeCoach() {
           onChange={(event) => setInput(event.target.value)}
           placeholder="Ask Vibe Coach..."
           aria-label="Message Vibe Coach"
-          className="h-10 flex-1 rounded-md border border-border bg-secondary/40 px-3.5 text-sm text-foreground placeholder:text-muted-foreground/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lever"
+          className="h-10 flex-1 rounded-md border border-border bg-secondary/40 px-3.5 text-sm text-foreground placeholder:text-subtle-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lever"
         />
         <button
           type="submit"
@@ -226,7 +226,7 @@ export function VibeCoach() {
               onChange={(event) => setKeyDraft(event.target.value)}
               placeholder="sk-ant-..."
               aria-label="Your Anthropic API key"
-              className="h-9 flex-1 rounded-md border border-border bg-secondary/40 px-3 font-mono text-xs text-foreground placeholder:text-muted-foreground/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lever"
+              className="h-9 flex-1 rounded-md border border-border bg-secondary/40 px-3 font-mono text-xs text-foreground placeholder:text-subtle-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lever"
             />
             <button
               type="button"
@@ -236,7 +236,7 @@ export function VibeCoach() {
               Use my key
             </button>
           </div>
-          <p className="text-[0.68rem] leading-relaxed text-muted-foreground/70">
+          <p className="text-[0.68rem] leading-relaxed text-subtle-foreground">
             Your key stays in this browser and is sent only to this site&rsquo;s
             chat route with your own messages. Get one at
             console.anthropic.com.
@@ -245,7 +245,7 @@ export function VibeCoach() {
       )}
 
       {byokKey && (
-        <p className="border-t border-border px-5 py-2 text-[0.68rem] text-muted-foreground/70">
+        <p className="border-t border-border px-5 py-2 text-[0.68rem] text-subtle-foreground">
           Using your API key from this browser.{" "}
           <button
             type="button"
